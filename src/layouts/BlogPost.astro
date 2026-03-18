@@ -116,12 +116,11 @@ const copy = locale === "zh"
   }
 
   .article-layout.with-toc {
-    max-width: none;
-    width: 100%;
+    max-width: min(1500px, 100%);
     display: grid;
     grid-template-columns: minmax(240px, 300px) minmax(0, 1fr);
     gap: 20px;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: start;
   }
 
@@ -143,6 +142,7 @@ const copy = locale === "zh"
     max-height: none;
     overflow: visible;
     padding: 8px 2px 16px 0;
+    transform: translateX(-30px);
   }
 
   .back-link {
@@ -319,6 +319,7 @@ const copy = locale === "zh"
       max-height: none;
       overflow: visible;
       padding-right: 0;
+      transform: none;
     }
 
     .article-toc {
