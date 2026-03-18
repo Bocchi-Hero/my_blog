@@ -1,5 +1,6 @@
 ---
 import { sharedCopy, type Locale } from "../i18n";
+import { AUTHOR_NAME, BILIBILI_URL, GITHUB_URL } from "../consts";
 
 interface Props {
   locale?: Locale;
@@ -11,8 +12,14 @@ const copy = sharedCopy[locale];
 ---
 
 <footer>
-  <p>© {today.getFullYear()} Ink & Interval</p>
-  <p class="note">{copy.footerNote}</p>
+  <p>© {today.getFullYear()} {AUTHOR_NAME}</p>
+  <p class="note">
+    {copy.footerNote}
+    <span class="dot">·</span>
+    <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer">GitHub</a>
+    <span class="dot">·</span>
+    <a href={BILIBILI_URL} target="_blank" rel="noopener noreferrer">Bilibili</a>
+  </p>
 </footer>
 
 <style>
@@ -36,6 +43,20 @@ const copy = sharedCopy[locale];
 
   .note {
     text-align: right;
+  }
+
+  .note a {
+    color: var(--text-muted);
+    text-decoration: none;
+  }
+
+  .note a:hover {
+    color: var(--text-primary);
+    text-decoration: none;
+  }
+
+  .dot {
+    margin: 0 0.35rem;
   }
 
   @media (max-width: 720px) {

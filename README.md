@@ -1,4 +1,4 @@
-# ✨ Ink & Interval Blog
+# ✨ Bocchi_Home Blog
 
 📖 一个基于 Astro 的双语个人博客，强调阅读体验、克制排版和长期写作。
 

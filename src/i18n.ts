@@ -12,7 +12,7 @@ export const sharedCopy = {
     },
     tagline: "Quietly published",
     languageLabel: "语言切换",
-    footerNote: "一个适合代码、写作与缓慢思考停留的温暖角落。",
+    footerNote: "Bocchi_Hero 的代码、写作与生活记录。",
   },
   en: {
     nav: {
@@ -22,7 +22,7 @@ export const sharedCopy = {
     },
     tagline: "Quietly published",
     languageLabel: "Language switch",
-    footerNote: "A warm, quiet corner for code, writing, and slow thinking.",
+    footerNote: "Code, writing, and life notes by Bocchi_Hero.",
   },
 } as const;
 

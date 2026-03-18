@@ -1,4 +1,4 @@
-# ✨ Ink & Interval Blog
+# ✨ Bocchi_Home Blog
 
 📖 A bilingual personal blog built with Astro, focused on calm reading, restrained layout, and long-term writing.
 

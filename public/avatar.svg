@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="Bocchi_Hero avatar placeholder">
+  <rect width="512" height="512" fill="#f0ede4"/>
+  <circle cx="256" cy="206" r="98" fill="#e5ded0" stroke="#cbbca4" stroke-width="8"/>
+  <path d="M120 432c18-86 70-132 136-132s118 46 136 132" fill="#e5ded0" stroke="#cbbca4" stroke-width="8"/>
+  <text x="256" y="476" text-anchor="middle" font-size="42" fill="#9b8e7a" font-family="Georgia, serif">Bocchi_Hero</text>
+</svg>
