@@ -116,10 +116,12 @@ const copy = locale === "zh"
   }
 
   .article-layout.with-toc {
-    max-width: min(1500px, 100%);
+    max-width: none;
+    width: 100%;
     display: grid;
-    grid-template-columns: minmax(240px, 280px) minmax(0, 1fr);
-    gap: 28px;
+    grid-template-columns: minmax(240px, 300px) minmax(0, 1fr);
+    gap: 20px;
+    justify-content: flex-start;
     align-items: start;
   }
 
