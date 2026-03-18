@@ -102,7 +102,7 @@ const copy = locale === "zh"
 
 <style>
   :global(main) {
-    max-width: min(1400px, calc(100vw - 48px));
+    max-width: min(1520px, calc(100vw - 48px));
   }
 
   .blog-post {
@@ -111,15 +111,16 @@ const copy = locale === "zh"
   }
 
   .article-layout {
-    max-width: 880px;
+    max-width: 920px;
     margin: 0 auto;
   }
 
   .article-layout.with-toc {
-    max-width: min(1360px, 100%);
+    max-width: min(1500px, 100%);
     display: grid;
-    grid-template-columns: 1fr minmax(0, 880px) 1fr;
-    gap: 36px;
+    grid-template-columns: 240px minmax(0, 920px) 240px;
+    gap: 32px;
+    justify-content: center;
     align-items: start;
   }
 
@@ -131,11 +132,11 @@ const copy = locale === "zh"
   .toc-sidebar {
     grid-column: 1;
     justify-self: start;
-    width: min(230px, 100%);
+    width: 100%;
     position: sticky;
-    top: 88px;
+    top: 72px;
     align-self: start;
-    max-height: calc(100vh - 96px);
+    max-height: calc(100vh - 80px);
     overflow-y: auto;
     padding-right: 2px;
   }
@@ -193,7 +194,7 @@ const copy = locale === "zh"
   }
 
   .article-toc {
-    margin-top: 48px;
+    margin-top: 36px;
     padding-left: 16px;
     border-left: 1px solid var(--border);
   }
@@ -223,6 +224,8 @@ const copy = locale === "zh"
     color: var(--text-secondary);
     text-decoration: none;
     font-size: 0.9rem;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
   }
 
   .article-toc a:hover {
@@ -285,7 +288,7 @@ const copy = locale === "zh"
     margin: 3rem 0;
   }
 
-  @media (max-width: 980px) {
+  @media (max-width: 1220px) {
     :global(main) {
       max-width: var(--container-home);
     }
