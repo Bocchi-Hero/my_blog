@@ -29,3 +29,7 @@ Thumbs.db
 # local debug logs
 dev*.log
 dev*.err
+
+# local assistant notes
+AGENTS.md
+CLAUDE.md
