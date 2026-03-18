@@ -118,7 +118,7 @@ const copy = locale === "zh"
   .article-layout.with-toc {
     max-width: min(1500px, 100%);
     display: grid;
-    grid-template-columns: clamp(220px, 18vw, 280px) minmax(0, 920px) clamp(220px, 18vw, 280px);
+    grid-template-columns: clamp(260px, 20vw, 320px) minmax(0, 920px) clamp(260px, 20vw, 320px);
     gap: 24px;
     justify-content: center;
     align-items: start;
@@ -133,7 +133,7 @@ const copy = locale === "zh"
     grid-column: 1;
     justify-self: start;
     width: 100%;
-    min-width: 220px;
+    min-width: 260px;
     position: sticky;
     top: 72px;
     align-self: start;
@@ -198,8 +198,8 @@ const copy = locale === "zh"
     margin-top: 36px;
     padding-left: 16px;
     width: 100%;
-    min-width: 220px;
-    max-width: 280px;
+    min-width: 260px;
+    max-width: 320px;
     border-left: 1px solid var(--border);
   }
 
@@ -225,12 +225,15 @@ const copy = locale === "zh"
   }
 
   .article-toc a {
+    display: block;
     color: var(--text-secondary);
     text-decoration: none;
     font-size: 0.9rem;
     line-height: 1.45;
-    overflow-wrap: normal;
-    word-break: normal;
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-break: keep-all;
+    line-break: strict;
   }
 
   .article-toc a:hover {
