@@ -118,22 +118,23 @@ const copy = locale === "zh"
   .article-layout.with-toc {
     max-width: min(1500px, 100%);
     display: grid;
-    grid-template-columns: 280px minmax(0, 1040px) 280px;
-    gap: 24px;
-    justify-content: center;
+    grid-template-columns: minmax(240px, 280px) minmax(0, 1fr);
+    gap: 28px;
     align-items: start;
   }
 
   .article-main {
     grid-column: 2;
     min-width: 0;
+    max-width: 1120px;
+    width: 100%;
   }
 
   .toc-sidebar {
     grid-column: 1;
     justify-self: start;
     width: 100%;
-    min-width: 280px;
+    min-width: 240px;
     position: sticky;
     top: 108px;
     align-self: start;
@@ -198,7 +199,7 @@ const copy = locale === "zh"
     margin-top: 132px;
     padding: 10px 0 16px 20px;
     width: 100%;
-    min-width: 280px;
+    min-width: 240px;
     max-width: 280px;
     border-left: 1px solid var(--border);
     writing-mode: horizontal-tb;
@@ -301,7 +302,7 @@ const copy = locale === "zh"
     margin: 3rem 0;
   }
 
-  @media (max-width: 1360px) {
+  @media (max-width: 1280px) {
     :global(main) {
       max-width: var(--container-home);
     }
