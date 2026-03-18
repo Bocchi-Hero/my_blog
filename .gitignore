@@ -20,3 +20,12 @@ Thumbs.db
 
 # Astro
 .astro/
+
+# local tooling state
+.omc/
+.vite-temp/
+.vite-cache-*/
+
+# local debug logs
+dev*.log
+dev*.err
