@@ -1,0 +1,249 @@
+:root {
+  --bg-page: #F5F4EF;
+  --bg-surface: #FAFAF8;
+  --bg-hover: #EFEDE6;
+  --text-primary: #1A1A18;
+  --text-secondary: #5C5B56;
+  --text-muted: #9C9A92;
+  --border: rgba(28, 27, 24, 0.12);
+  --border-hover: rgba(28, 27, 24, 0.22);
+  --accent: #CC785C;
+  --accent-light: #F2E8E3;
+  --accent-underline: rgba(204, 120, 92, 0.35);
+  --tag-hover: #EAD5CC;
+  --container-home: 1160px;
+  --container-read: 780px;
+  --radius: 12px;
+  --radius-image: 6px;
+  --font-body: "Fraunce", "Fraunces", "Iowan Old Style", "Georgia", "Noto Serif SC", "Songti SC", serif;
+  --font-display: "Tiempos Text", "Tiempos", "Georgia", "Palatino Linotype", "Noto Serif SC", "Songti SC", serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 17px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.8;
+  color: var(--text-primary);
+  background: var(--bg-page);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+main {
+  width: 100%;
+  max-width: var(--container-home);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+::selection {
+  background: var(--accent-light);
+}
+
+a {
+  color: var(--text-secondary);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--text-primary);
+  text-decoration: underline;
+  text-decoration-color: var(--border-hover);
+  text-underline-offset: 2px;
+}
+
+a,
+button {
+  transition: color 0.15s ease, background 0.12s ease;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+}
+
+nav,
+.meta {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+
+h1 {
+  font-size: clamp(2rem, 4vw, 2.6rem);
+  line-height: 1.25;
+  margin: 0 0 1rem;
+}
+
+h2 {
+  font-size: 1.4rem;
+  line-height: 1.35;
+  margin: 0 0 0.8rem;
+}
+
+h3 {
+  font-size: 1.15rem;
+  line-height: 1.4;
+  margin: 0 0 0.6rem;
+}
+
+p {
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+  text-wrap: pretty;
+}
+
+li {
+  color: var(--text-secondary);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-image);
+}
+
+strong {
+  color: var(--text-primary);
+}
+
+code {
+  font-family: var(--font-body);
+  font-size: 0.85em;
+  background: var(--bg-hover);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+pre {
+  background: var(--bg-hover);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px 24px;
+  overflow-x: auto;
+  margin: 2rem 0;
+}
+
+pre code {
+  background: none;
+  padding: 0;
+  font-size: 0.88rem;
+  line-height: 1.7;
+}
+
+pre.astro-code {
+  background: var(--bg-hover) !important;
+  border: 1px solid var(--border) !important;
+}
+
+pre.astro-code code,
+pre.astro-code .line {
+  background: none !important;
+  border: none !important;
+}
+
+blockquote {
+  border-left: 2px solid var(--border-hover);
+  margin: 2rem 0;
+  padding: 0 0 0 24px;
+  color: var(--text-secondary);
+}
+
+ul,
+ol {
+  padding-left: 1.4rem;
+  margin-bottom: 1.2rem;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 3rem 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+}
+
+th,
+td {
+  border: 1px solid var(--border);
+  padding: 0.7rem 0.9rem;
+  text-align: left;
+}
+
+th {
+  background: var(--bg-surface);
+  font-family: var(--font-display);
+}
+
+.eyebrow {
+  display: inline-block;
+  margin-bottom: 0.7rem;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  letter-spacing: 0.02em;
+}
+
+.meta {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.panel {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-surface);
+}
+
+.tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-family: var(--font-display);
+  color: var(--accent);
+  background: var(--accent-light);
+  padding: 3px 10px;
+  border-radius: 999px;
+  letter-spacing: 0.01em;
+}
+
+.tag:hover {
+  background: var(--tag-hover);
+  text-decoration: none;
+}
+
+@media (max-width: 720px) {
+  html,
+  body {
+    font-size: 16px;
+  }
+
+  main {
+    padding: 0 16px;
+  }
+
+  h1 {
+    font-size: clamp(1.9rem, 7vw, 2.3rem);
+  }
+}

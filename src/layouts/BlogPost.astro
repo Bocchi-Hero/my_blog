@@ -1,0 +1,321 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import FormattedDate from "../components/FormattedDate.astro";
+import { localePath, type Locale } from "../i18n";
+
+interface Props {
+  title: string;
+  description: string;
+  pubDate: Date;
+  updatedDate?: Date;
+  heroImage?: string;
+  tags?: string[];
+  readingTime?: number;
+  locale?: Locale;
+  headings?: { depth: number; slug: string; text: string }[];
+}
+
+const {
+  title,
+  description,
+  pubDate,
+  updatedDate,
+  heroImage,
+  tags = [],
+  readingTime,
+  locale = "zh",
+  headings = [],
+} = Astro.props;
+
+const copy = locale === "zh"
+  ? {
+      back: "返回文章归档",
+      eyebrow: "文章",
+      readTime: (minutes: number) => `· 约 ${minutes} 分钟阅读`,
+      updated: "更新于",
+      originalNotice: "",
+      tocTitle: "目录",
+    }
+  : {
+      back: "Back to archive",
+      eyebrow: "Essay",
+      readTime: (minutes: number) => `· ${minutes} min read`,
+      updated: "Updated on",
+      originalNotice: "The article body remains in Chinese for now.",
+      tocTitle: "Contents",
+    };
+---
+
+<BaseLayout title={title} description={description} locale={locale}>
+  <article class="blog-post">
+    <a href={localePath(locale, "/blog/")} class="back-link">{copy.back}</a>
+
+    <div class:list={["article-layout", { "with-toc": headings.length > 0 }]}>
+      {headings.length > 0 && (
+        <aside class="toc-sidebar">
+          <nav class="article-toc" aria-label={copy.tocTitle}>
+            <h2>{copy.tocTitle}</h2>
+            <ul>
+              {headings.map((heading) => (
+                <li class:list={[`depth-${heading.depth}`]}>
+                  <a href={`#${heading.slug}`}>{heading.text}</a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </aside>
+      )}
+
+      <div class="article-main">
+        <header class="article-header">
+          <p class="eyebrow">{copy.eyebrow}</p>
+          <h1 class="article-title">{title}</h1>
+          <p class="article-description">{description}</p>
+          <div class="article-meta meta">
+            <FormattedDate date={pubDate} locale={locale} />
+            {typeof readingTime === "number" && <span>{copy.readTime(readingTime)}</span>}
+            {updatedDate && (
+              <span>
+                ({copy.updated} <FormattedDate date={updatedDate} locale={locale} />)
+              </span>
+            )}
+          </div>
+          {copy.originalNotice && <p class="article-note">{copy.originalNotice}</p>}
+          {tags.length > 0 && (
+            <div class="article-tags">
+              {tags.map((tag) => (
+                <span class="tag">{tag}</span>
+              ))}
+            </div>
+          )}
+        </header>
+
+        {heroImage && <img src={heroImage} alt={title} class="hero-image" />}
+
+        <div class="article-body">
+          <slot />
+        </div>
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  :global(main) {
+    max-width: min(1400px, calc(100vw - 48px));
+  }
+
+  .blog-post {
+    max-width: none;
+    margin: 0 auto;
+  }
+
+  .article-layout {
+    max-width: 880px;
+    margin: 0 auto;
+  }
+
+  .article-layout.with-toc {
+    max-width: min(1360px, 100%);
+    display: grid;
+    grid-template-columns: 1fr minmax(0, 880px) 1fr;
+    gap: 36px;
+    align-items: start;
+  }
+
+  .article-main {
+    grid-column: 2;
+    min-width: 0;
+  }
+
+  .toc-sidebar {
+    grid-column: 1;
+    justify-self: start;
+    width: min(230px, 100%);
+    position: sticky;
+    top: 88px;
+    align-self: start;
+    max-height: calc(100vh - 96px);
+    overflow-y: auto;
+    padding-right: 2px;
+  }
+
+  .back-link {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    text-decoration: none;
+  }
+
+  .back-link:hover {
+    color: var(--text-primary);
+  }
+
+  .article-header {
+    padding: 60px 0 40px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 48px;
+  }
+
+  .article-title {
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: -0.03em;
+    margin-bottom: 16px;
+  }
+
+  .article-description {
+    margin-bottom: 14px;
+  }
+
+  .article-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .article-note {
+    margin-top: 12px;
+    margin-bottom: 0;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+  }
+
+  .article-tags {
+    margin-top: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .hero-image {
+    margin-bottom: 32px;
+  }
+
+  .article-toc {
+    margin-top: 48px;
+    padding-left: 16px;
+    border-left: 1px solid var(--border);
+  }
+
+  .article-toc h2 {
+    font-size: 1rem;
+    margin: 0 0 10px;
+  }
+
+  .article-toc ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 6px;
+  }
+
+  .article-toc li.depth-3 {
+    padding-left: 12px;
+  }
+
+  .article-toc li.depth-4 {
+    padding-left: 24px;
+  }
+
+  .article-toc a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.9rem;
+  }
+
+  .article-toc a:hover {
+    color: var(--text-primary);
+  }
+
+  .article-body {
+    font-size: 1rem;
+  }
+
+  .article-body :global(p) {
+    margin-bottom: 1.5rem;
+  }
+
+  .article-body :global(a) {
+    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-color: var(--accent-underline);
+    text-underline-offset: 3px;
+  }
+
+  .article-body :global(a:hover) {
+    text-decoration-color: var(--accent);
+  }
+
+  .article-body :global(blockquote) {
+    border-left: 2px solid var(--border-hover);
+    margin: 2rem 0;
+    padding: 0 0 0 24px;
+    color: var(--text-secondary);
+  }
+
+  .article-body :global(code) {
+    font-family: var(--font-body);
+    font-size: 0.85em;
+    background: var(--bg-hover);
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+
+  .article-body :global(pre) {
+    background: var(--bg-hover);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px 24px;
+    overflow-x: auto;
+    margin: 2rem 0;
+  }
+
+  .article-body :global(pre code) {
+    background: none;
+    padding: 0;
+    font-size: 0.88rem;
+    line-height: 1.7;
+  }
+
+  .article-body :global(hr) {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 3rem 0;
+  }
+
+  @media (max-width: 980px) {
+    :global(main) {
+      max-width: var(--container-home);
+    }
+
+    .article-layout.with-toc {
+      max-width: 880px;
+      display: block;
+    }
+
+    .toc-sidebar {
+      position: static;
+      max-height: none;
+      overflow: visible;
+      padding-right: 0;
+    }
+
+    .article-toc {
+      margin-top: 0;
+      margin-bottom: 26px;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .article-header {
+      padding: 40px 0 30px;
+      margin-bottom: 30px;
+    }
+
+    .article-title {
+      font-size: 1.75rem;
+    }
+  }
+</style>

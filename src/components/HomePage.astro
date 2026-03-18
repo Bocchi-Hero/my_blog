@@ -1,0 +1,138 @@
+---
+import type { CollectionEntry } from "astro:content";
+import BlogCard from "./BlogCard.astro";
+import { getLocalizedPostDescription, getLocalizedPostTags, getLocalizedPostTitle } from "../content-utils";
+import { localePath, type Locale } from "../i18n";
+
+interface Props {
+  locale: Locale;
+  posts: CollectionEntry<"blog">[];
+}
+
+const { locale, posts } = Astro.props;
+const recentPosts = posts.slice(0, 6);
+
+const copy = locale === "zh"
+  ? {
+      eyebrow: "Quiet notes",
+      title: "像一本安静的纸质笔记。",
+      lead: "写编程实践、工具判断和长期写作。界面尽量不打扰阅读。",
+      readLink: "开始阅读",
+      aboutLink: "关于作者",
+      recentTitle: "最近文章",
+      allPosts: "全部文章",
+    }
+  : {
+      eyebrow: "Quiet notes",
+      title: "A calm notebook for code and writing.",
+      lead: "Programming practice, tool decisions, and long-form writing with minimal visual noise.",
+      readLink: "Start reading",
+      aboutLink: "About",
+      recentTitle: "Recent posts",
+      allPosts: "All posts",
+    };
+---
+
+<section class="home-hero">
+  <p class="eyebrow">{copy.eyebrow}</p>
+  <h1>{copy.title}</h1>
+  <p class="lead">{copy.lead}</p>
+  <p class="entry-links">
+    <a href={localePath(locale, "/blog/")}>{copy.readLink}</a>
+    <span>·</span>
+    <a href={localePath(locale, "/about/")}>{copy.aboutLink}</a>
+  </p>
+</section>
+
+<section class="home-list">
+  <div class="section-head">
+    <h2>{copy.recentTitle}</h2>
+    <a href={localePath(locale, "/blog/")} class="all-link">{copy.allPosts}</a>
+  </div>
+
+  <div class="post-list">
+    {recentPosts.map((post) => (
+      <BlogCard
+        locale={locale}
+        title={getLocalizedPostTitle(post, locale)}
+        description={getLocalizedPostDescription(post, locale)}
+        pubDate={post.data.pubDate}
+        tags={getLocalizedPostTags(post, locale)}
+        url={localePath(locale, `/blog/${post.id}/`)}
+      />
+    ))}
+  </div>
+</section>
+
+<style>
+  .home-hero {
+    max-width: var(--container-read);
+    padding-top: 12px;
+  }
+
+  .home-hero h1 {
+    margin-bottom: 14px;
+    white-space: nowrap;
+    font-size: clamp(1.95rem, 3.7vw, 2.45rem);
+  }
+
+  .lead {
+    margin-bottom: 12px;
+    max-width: calc(var(--container-read) - 24px);
+  }
+
+  .entry-links {
+    margin-bottom: 0;
+    font-size: 0.9rem;
+  }
+
+  .entry-links span {
+    color: var(--text-muted);
+    margin: 0 10px;
+  }
+
+  .home-list {
+    margin-top: 4rem;
+  }
+
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .section-head h2 {
+    margin: 0;
+  }
+
+  .all-link {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+  }
+
+  .all-link:hover {
+    color: var(--text-primary);
+  }
+
+  .post-list {
+    border-top: 1px solid var(--border);
+    display: grid;
+    gap: 2px;
+  }
+
+  @media (max-width: 900px) {
+    .home-hero h1 {
+      white-space: normal;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .section-head {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>

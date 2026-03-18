@@ -1,0 +1,32 @@
+---
+import { getCollection, render } from "astro:content";
+import BlogPost from "../../../layouts/BlogPost.astro";
+import { getLocalizedPostDescription, getLocalizedPostTags, getLocalizedPostTitle } from "../../../content-utils";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: post,
+  }));
+}
+
+const post = Astro.props;
+const words = post.body.trim().split(/\s+/).length;
+const readingTime = Math.max(1, Math.ceil(words / 220));
+const { Content, headings } = await render(post);
+---
+
+<BlogPost
+  title={getLocalizedPostTitle(post, "en")}
+  description={getLocalizedPostDescription(post, "en")}
+  pubDate={post.data.pubDate}
+  updatedDate={post.data.updatedDate}
+  heroImage={post.data.heroImage}
+  tags={getLocalizedPostTags(post, "en")}
+  readingTime={readingTime}
+  locale="en"
+  headings={headings}
+>
+  <Content />
+</BlogPost>

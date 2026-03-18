@@ -1,0 +1,9 @@
+EPERM: operation not permitted, mkdir 'C:\Users\23292\AppData\Roaming\astro\Config'
+  [1mLocation:[22m
+    [4mD:\my_blog\node_modules\@astrojs\telemetry\dist\config.js:56:8[24m
+  [1mStack trace:[22m
+[2m    at Object.mkdirSync (node:fs:1349:26)
+    at get store (file:///D:/my_blog/node_modules/@astrojs/telemetry/dist/config.js:38:10)
+    at AstroTelemetry.getConfigWithFallback (file:///D:/my_blog/node_modules/@astrojs/telemetry/dist/index.js:38:38)
+    at get isDisabled (file:///D:/my_blog/node_modules/@astrojs/telemetry/dist/index.js:67:17)
+    at notify (file:///D:/my_blog/node_modules/astro/dist/cli/telemetry/index.js:5:19)[22m

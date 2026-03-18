@@ -1,0 +1,9 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import NotFoundPage from "../components/NotFoundPage.astro";
+import { SITE_TITLE } from "../consts";
+---
+
+<BaseLayout title={`页面不存在 · ${SITE_TITLE}`} description="这个页面可能已经移动，或者链接写错了。" locale="zh">
+  <NotFoundPage locale="zh" />
+</BaseLayout>

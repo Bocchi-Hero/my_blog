@@ -1,0 +1,5 @@
+{"t":0,"agent":"aa3ac8b","agent_type":"Explore","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"aa3ac8b","agent_type":"Explore","event":"agent_stop","success":true,"duration_ms":423021}
+{"t":0,"agent":"system","event":"skill_invoked","skill_name":"frontend-design"}
+{"t":0,"agent":"aa61b9b","agent_type":"unknown","event":"agent_stop","success":true}
+{"t":0,"agent":"ade46b6","agent_type":"unknown","event":"agent_stop","success":true}

@@ -1,0 +1,62 @@
+---
+import { localePath, type Locale } from "../i18n";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const copy = locale === "zh"
+  ? {
+      title: "页面不存在。",
+      description: "链接可能已失效，或页面尚未发布。",
+      home: "回到首页",
+      archive: "浏览文章",
+    }
+  : {
+      title: "Page not found.",
+      description: "The link may be outdated, or the page has not been published yet.",
+      home: "Back home",
+      archive: "Browse posts",
+    };
+---
+
+<section class="not-found">
+  <p class="eyebrow">404</p>
+  <h1>{copy.title}</h1>
+  <p>{copy.description}</p>
+  <p class="links">
+    <a href={localePath(locale, "/")}>{copy.home}</a>
+    <span>·</span>
+    <a href={localePath(locale, "/blog/")}>{copy.archive}</a>
+  </p>
+</section>
+
+<style>
+  .not-found {
+    max-width: var(--container-read);
+    margin: 80px auto 0;
+    text-align: center;
+  }
+
+  .not-found h1 {
+    margin-bottom: 12px;
+  }
+
+  .not-found p {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 540px;
+  }
+
+  .links {
+    margin-top: 8px;
+    margin-bottom: 0;
+    font-size: 0.9rem;
+  }
+
+  .links span {
+    margin: 0 10px;
+    color: var(--text-muted);
+  }
+</style>

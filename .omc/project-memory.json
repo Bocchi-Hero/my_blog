@@ -1,0 +1,222 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1773812562360,
+  "projectRoot": "D:\\my_blog",
+  "techStack": {
+    "languages": [
+      {
+        "name": "JavaScript/TypeScript",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "package.json"
+        ]
+      },
+      {
+        "name": "TypeScript",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "tsconfig.json"
+        ]
+      }
+    ],
+    "frameworks": [
+      {
+        "name": "astro",
+        "version": "5.5.0",
+        "category": "fullstack"
+      }
+    ],
+    "packageManager": "npm",
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": "npm run build",
+    "testCommand": null,
+    "lintCommand": null,
+    "devCommand": "npm run dev",
+    "scripts": {
+      "dev": "astro dev",
+      "build": "astro build",
+      "preview": "astro preview",
+      "astro": "astro"
+    }
+  },
+  "conventions": {
+    "namingStyle": "camelCase",
+    "importStyle": "ES modules",
+    "testPattern": null,
+    "fileOrganization": "type-based"
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [
+      "public",
+      "src"
+    ],
+    "gitBranches": null
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "public": {
+      "path": "public",
+      "purpose": "Public files",
+      "fileCount": 1,
+      "lastAccessed": 1773812562335,
+      "keyFiles": [
+        "favicon.svg"
+      ]
+    },
+    "src": {
+      "path": "src",
+      "purpose": "Source code",
+      "fileCount": 2,
+      "lastAccessed": 1773812562336,
+      "keyFiles": [
+        "consts.ts",
+        "content.config.ts"
+      ]
+    },
+    "src\\components": {
+      "path": "src\\components",
+      "purpose": "UI components",
+      "fileCount": 4,
+      "lastAccessed": 1773812562344,
+      "keyFiles": [
+        "BlogCard.astro",
+        "Footer.astro",
+        "FormattedDate.astro"
+      ]
+    },
+    "src\\pages": {
+      "path": "src\\pages",
+      "purpose": "Page components",
+      "fileCount": 3,
+      "lastAccessed": 1773812562345,
+      "keyFiles": [
+        "404.astro",
+        "about.astro",
+        "index.astro"
+      ]
+    }
+  },
+  "hotPaths": [
+    {
+      "path": "src\\components\\HomePage.astro",
+      "accessCount": 10,
+      "lastAccessed": 1773824608091,
+      "type": "file"
+    },
+    {
+      "path": "src\\layouts\\BlogPost.astro",
+      "accessCount": 10,
+      "lastAccessed": 1773824751994,
+      "type": "file"
+    },
+    {
+      "path": "src\\components\\Header.astro",
+      "accessCount": 9,
+      "lastAccessed": 1773824607163,
+      "type": "file"
+    },
+    {
+      "path": "src\\styles\\global.css",
+      "accessCount": 6,
+      "lastAccessed": 1773824475105,
+      "type": "file"
+    },
+    {
+      "path": "src\\layouts\\BaseLayout.astro",
+      "accessCount": 6,
+      "lastAccessed": 1773824831009,
+      "type": "file"
+    },
+    {
+      "path": "src\\components\\BlogCard.astro",
+      "accessCount": 5,
+      "lastAccessed": 1773824607631,
+      "type": "file"
+    },
+    {
+      "path": "src\\components\\PostSearch.astro",
+      "accessCount": 4,
+      "lastAccessed": 1773824752370,
+      "type": "file"
+    },
+    {
+      "path": "src\\components\\ArchivePage.astro",
+      "accessCount": 3,
+      "lastAccessed": 1773824752723,
+      "type": "file"
+    },
+    {
+      "path": "src\\components\\AboutPage.astro",
+      "accessCount": 3,
+      "lastAccessed": 1773824753068,
+      "type": "file"
+    },
+    {
+      "path": "src\\components\\NotFoundPage.astro",
+      "accessCount": 3,
+      "lastAccessed": 1773824753550,
+      "type": "file"
+    },
+    {
+      "path": "src\\components\\Footer.astro",
+      "accessCount": 2,
+      "lastAccessed": 1773824355444,
+      "type": "file"
+    },
+    {
+      "path": "AGENTS.md",
+      "accessCount": 1,
+      "lastAccessed": 1773821088129,
+      "type": "file"
+    },
+    {
+      "path": "src\\i18n.ts",
+      "accessCount": 1,
+      "lastAccessed": 1773821088162,
+      "type": "file"
+    },
+    {
+      "path": "src\\content-utils.ts",
+      "accessCount": 1,
+      "lastAccessed": 1773821088232,
+      "type": "file"
+    },
+    {
+      "path": "astro.config.mjs",
+      "accessCount": 1,
+      "lastAccessed": 1773821118162,
+      "type": "file"
+    },
+    {
+      "path": "src\\content.config.ts",
+      "accessCount": 1,
+      "lastAccessed": 1773821118187,
+      "type": "file"
+    },
+    {
+      "path": "src\\consts.ts",
+      "accessCount": 1,
+      "lastAccessed": 1773821118221,
+      "type": "file"
+    },
+    {
+      "path": "CLAUDE.md",
+      "accessCount": 1,
+      "lastAccessed": 1773821157999,
+      "type": "file"
+    },
+    {
+      "path": "src\\components\\FormattedDate.astro",
+      "accessCount": 1,
+      "lastAccessed": 1773821528495,
+      "type": "file"
+    }
+  ],
+  "userDirectives": []
+}

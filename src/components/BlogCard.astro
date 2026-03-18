@@ -1,0 +1,94 @@
+---
+import FormattedDate from "./FormattedDate.astro";
+import type { Locale } from "../i18n";
+
+interface Props {
+  title: string;
+  description: string;
+  pubDate: Date;
+  tags?: string[];
+  url: string;
+  locale?: Locale;
+}
+
+const { title, description, pubDate, tags = [], url, locale = "zh" } = Astro.props;
+---
+
+<article class="post-item">
+  <a href={url}>
+    <h3 class="post-title">{title}</h3>
+    <p class="post-date"><FormattedDate date={pubDate} locale={locale} /></p>
+    <p class="post-desc">{description}</p>
+    {tags.length > 0 && (
+      <div class="post-tags">
+        {tags.map((tag) => (
+          <span class="tag">{tag}</span>
+        ))}
+      </div>
+    )}
+  </a>
+</article>
+
+<style>
+  .post-item a {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: baseline;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--border);
+    text-decoration: none;
+  }
+
+  .post-item a:hover {
+    background: var(--bg-hover);
+    margin: 0 -12px;
+    padding-left: 12px;
+    padding-right: 12px;
+    text-decoration: none;
+  }
+
+  .post-title {
+    font-size: 1rem;
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    color: var(--text-primary);
+    margin: 0;
+  }
+
+  .post-date {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+    margin: 0 0 0 24px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .post-desc {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin: 4px 0 0;
+    line-height: 1.5;
+    grid-column: 1;
+  }
+
+  .post-tags {
+    grid-column: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  @media (max-width: 720px) {
+    .post-item a {
+      grid-template-columns: 1fr;
+      gap: 4px;
+    }
+
+    .post-date {
+      margin-left: 0;
+      margin-top: 2px;
+    }
+  }
+</style>

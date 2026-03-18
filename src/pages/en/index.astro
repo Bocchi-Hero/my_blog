@@ -1,0 +1,14 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import HomePage from "../../components/HomePage.astro";
+import { getCollection } from "astro:content";
+import { SITE_DESCRIPTION_EN, SITE_TITLE } from "../../consts";
+
+const posts = (await getCollection("blog")).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+
+<BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION_EN} locale="en">
+  <HomePage locale="en" posts={posts} />
+</BaseLayout>

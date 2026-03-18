@@ -1,0 +1,151 @@
+---
+import { SITE_TITLE } from "../consts";
+import HeaderSearch from "./HeaderSearch.astro";
+import {
+  getLocaleFromPathname,
+  localePath,
+  sharedCopy,
+  stripLocaleFromPathname,
+  type Locale,
+} from "../i18n";
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = getLocaleFromPathname(Astro.url.pathname) } = Astro.props;
+const copy = sharedCopy[locale];
+const currentPath = stripLocaleFromPathname(Astro.url.pathname);
+const navLinks = [
+  { href: localePath(locale, "/"), match: "/", label: copy.nav.home },
+  { href: localePath(locale, "/blog/"), match: "/blog/", label: copy.nav.blog },
+  { href: localePath(locale, "/about/"), match: "/about/", label: copy.nav.about },
+];
+const switchToZh = localePath("zh", currentPath);
+const switchToEn = localePath("en", currentPath);
+---
+
+<header>
+  <nav>
+    <a href={localePath(locale, "/")} class="nav-logo">{SITE_TITLE}</a>
+
+    <div class="nav-right">
+      <div class="nav-links">
+        {navLinks.map(({ href, match, label }) => (
+          <a href={href} class:list={[{ active: match === "/" ? currentPath === "/" : currentPath.startsWith(match) }]}>
+            {label}
+          </a>
+        ))}
+      </div>
+
+      <HeaderSearch locale={locale} />
+
+      <div class="lang-switch" aria-label={copy.languageLabel}>
+        <a href={switchToZh} class:list={[{ active: locale === "zh" }]}>中</a>
+        <span>/</span>
+        <a href={switchToEn} class:list={[{ active: locale === "en" }]}>EN</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<style>
+  header {
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 2rem;
+  }
+
+  nav {
+    max-width: var(--container-home);
+    margin: 0 auto;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .nav-logo {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: -0.03em;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .nav-logo:hover {
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: inline-flex;
+    align-items: center;
+    gap: 28px;
+  }
+
+  .nav-links a {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+  }
+
+  .nav-links a:hover,
+  .nav-links a.active {
+    color: var(--text-primary);
+    text-decoration: none;
+  }
+
+  .nav-right {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .lang-switch {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+
+  .lang-switch a {
+    color: var(--text-muted);
+    text-decoration: none;
+  }
+
+  .lang-switch a:hover,
+  .lang-switch a.active {
+    color: var(--text-primary);
+  }
+
+  @media (max-width: 720px) {
+    nav {
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      gap: 0.7rem 1.1rem;
+    }
+
+    .nav-right {
+      order: 3;
+      width: 100%;
+      margin-left: 0;
+      flex-wrap: wrap;
+      gap: 0.65rem 1rem;
+    }
+
+    .nav-links {
+      width: 100%;
+      display: flex;
+      justify-content: flex-start;
+      gap: 1rem;
+    }
+
+    .lang-switch {
+      margin-left: 0;
+    }
+  }
+</style>

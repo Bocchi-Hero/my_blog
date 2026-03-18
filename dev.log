@@ -1,0 +1,44 @@
+
+> my-blog@0.0.1 dev
+> astro dev --host 127.0.0.1 --port 4322
+
+[2m13:34:22[22m [34m[types][39m Generated [2m1ms[22m
+[31m[1m13:34:22[22m [ERROR] [content][39m spawn EPERM
+[33m[1m13:34:22[22m [WARN] [content][39m Content config not loaded
+[33m[1m13:34:22[22m [WARN] [vite][39m Failed to resolve dependency: [36mastro > cssesc[39m, present in client 'optimizeDeps.include'
+[33m[1m13:34:22[22m [WARN] [vite][39m Failed to resolve dependency: [36mastro > aria-query[39m, present in client 'optimizeDeps.include'
+[33m[1m13:34:22[22m [WARN] [vite][39m Failed to resolve dependency: [36mastro > axobject-query[39m, present in client 'optimizeDeps.include'
+
+[42m[1m astro [22m[49m [32mv5.18.1[39m [2mready in[22m 57 [2mms[22m
+
+[2m┃[22m Local    [36mhttp://127.0.0.1:4322/[39m
+
+[2m13:34:22[22m [32mwatching for file changes...[39m
+[31m[1m13:34:22[22m [ERROR] [vite][39m Error: [31m  Failed to scan for dependencies from entries:
+  D:/my_blog/src/components/BlogCard.astro
+D:/my_blog/src/components/Footer.astro
+D:/my_blog/src/components/FormattedDate.astro
+D:/my_blog/src/components/Header.astro
+D:/my_blog/src/pages/404.astro
+D:/my_blog/src/pages/about.astro
+D:/my_blog/src/pages/index.astro
+D:/my_blog/src/layouts/BaseLayout.astro
+D:/my_blog/src/layouts/BlogPost.astro
+D:/my_blog/src/pages/blog/index.astro
+D:/my_blog/src/pages/blog/[...slug].astro
+
+  [39mspawn EPERM
+    at ChildProcess.spawn (node:internal/child_process:421:11)
+    at Object.spawn (node:child_process:796:9)
+    at ensureServiceIsRunning (D:\my_blog\node_modules\vite\node_modules\esbuild\lib\main.js:1978:29)
+    at Object.context (D:\my_blog\node_modules\vite\node_modules\esbuild\lib\main.js:1877:33)
+    at prepareEsbuildScanner (file:///D:/my_blog/node_modules/vite/dist/node/chunks/dep-D4NMHUTW.js:14266:24)
+    at async file:///D:/my_blog/node_modules/vite/dist/node/chunks/dep-D4NMHUTW.js:47014:28
+[31m[1m13:34:27[22m [ERROR] [vite][39m [31merror while updating dependencies:
+Error: EPERM: operation not permitted, rename 'D:\my_blog\node_modules\.vite\deps_temp_9ae084f7' -> 'D:\my_blog\node_modules\.vite\deps'[39m
+[31m[1m13:34:35[22m [ERROR][39m spawn EPERM
+  [1mStack trace:[22m
+[2m    at ChildProcess.spawn (node:internal/child_process:421:11)
+    at Object.execFile (node:child_process:349:17)
+    [...] See full stack trace in the browser, or rerun with --verbose.[22m
+^C^C

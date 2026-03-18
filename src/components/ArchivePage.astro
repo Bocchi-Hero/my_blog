@@ -1,0 +1,68 @@
+---
+import type { CollectionEntry } from "astro:content";
+import BlogCard from "./BlogCard.astro";
+import { getLocalizedPostDescription, getLocalizedPostTags, getLocalizedPostTitle } from "../content-utils";
+import { localePath, type Locale } from "../i18n";
+
+interface Props {
+  locale: Locale;
+  posts: CollectionEntry<"blog">[];
+}
+
+const { locale, posts } = Astro.props;
+const copy = locale === "zh"
+  ? {
+      title: "全部文章",
+      count: `目前共 ${posts.length} 篇，按时间倒序。`,
+      note: "像索引页一样浏览标题与摘要，快速找到你想读的内容。",
+    }
+  : {
+      title: "All posts",
+      count: `${posts.length} posts in reverse chronological order.`,
+      note: "Scan this index quickly by title and summary.",
+    };
+---
+
+<section class="archive-head">
+  <p class="eyebrow">Archive</p>
+  <h1>{copy.title}</h1>
+  <p class="count">{copy.count}</p>
+  <p class="note">{copy.note}</p>
+</section>
+
+<section class="archive-list">
+  <div class="post-list">
+    {posts.map((post) => (
+      <BlogCard
+        locale={locale}
+        title={getLocalizedPostTitle(post, locale)}
+        description={getLocalizedPostDescription(post, locale)}
+        pubDate={post.data.pubDate}
+        tags={getLocalizedPostTags(post, locale)}
+        url={localePath(locale, `/blog/${post.id}/`)}
+      />
+    ))}
+  </div>
+</section>
+
+<style>
+  .archive-head {
+    max-width: var(--container-read);
+  }
+
+  .count,
+  .note {
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .archive-list {
+    margin-top: 4rem;
+  }
+
+  .post-list {
+    border-top: 1px solid var(--border);
+    display: grid;
+    gap: 2px;
+  }
+</style>

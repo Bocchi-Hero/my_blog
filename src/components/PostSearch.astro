@@ -1,0 +1,165 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { getLocalizedPostDescription, getLocalizedPostTags, getLocalizedPostTitle } from "../content-utils";
+import { localePath, type Locale } from "../i18n";
+
+interface Props {
+  locale: Locale;
+  posts: CollectionEntry<"blog">[];
+}
+
+const { locale, posts } = Astro.props;
+const copy = locale === "zh"
+  ? {
+      label: "搜索文章",
+      placeholder: "输入标题、关键词或标签",
+      hint: "例如: Astro / GitHub / 教程",
+      empty: "没有匹配结果",
+    }
+  : {
+      label: "Search posts",
+      placeholder: "Type title, keyword, or tag",
+      hint: "Try: Astro / GitHub / tutorial",
+      empty: "No matching posts",
+    };
+
+const searchItems = posts.map((post) => {
+  const title = getLocalizedPostTitle(post, locale);
+  const description = getLocalizedPostDescription(post, locale);
+  const tags = getLocalizedPostTags(post, locale);
+  return {
+    title,
+    description,
+    tags,
+    url: localePath(locale, `/blog/${post.id}/`),
+    keywords: `${title} ${description} ${tags.join(" ")}`.toLowerCase(),
+  };
+});
+---
+
+<section class="search-panel" data-search-root>
+  <label class="search-label" for={`search-${locale}`}>{copy.label}</label>
+  <input
+    id={`search-${locale}`}
+    class="search-input"
+    type="search"
+    placeholder={copy.placeholder}
+    autocomplete="off"
+    data-search-input
+  />
+  <p class="search-hint" data-search-hint>{copy.hint}</p>
+  <p class="search-empty" data-search-empty hidden>{copy.empty}</p>
+  <ul class="search-results" data-search-results>
+    {searchItems.map((item) => (
+      <li data-search-item data-keywords={item.keywords} hidden>
+        <a href={item.url}>
+          <strong>{item.title}</strong>
+          <span>{item.description}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<script is:inline>
+  const roots = document.querySelectorAll("[data-search-root]");
+  roots.forEach((root) => {
+    const input = root.querySelector("[data-search-input]");
+    const results = root.querySelector("[data-search-results]");
+    const items = Array.from(root.querySelectorAll("[data-search-item]"));
+    const hint = root.querySelector("[data-search-hint]");
+    const empty = root.querySelector("[data-search-empty]");
+    if (!input || !results || !items.length || !hint || !empty) return;
+
+    const update = () => {
+      const q = input.value.trim().toLowerCase();
+      const hasQuery = q.length > 0;
+      let shown = 0;
+      items.forEach((item) => {
+        const text = item.dataset.keywords || "";
+        const matched = hasQuery && text.includes(q);
+        const visible = matched && shown < 8;
+        item.hidden = !visible;
+        if (visible) shown += 1;
+      });
+      results.hidden = !hasQuery;
+      hint.hidden = hasQuery;
+      empty.hidden = !hasQuery || shown !== 0;
+    };
+
+    input.addEventListener("input", update);
+    update();
+  });
+</script>
+
+<style>
+  .search-panel {
+    margin-bottom: 1.25rem;
+  }
+
+  .search-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+    font-size: 0.82rem;
+    font-family: var(--font-display);
+  }
+
+  .search-input {
+    width: 100%;
+    height: 42px;
+    border: 1px solid var(--border);
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    padding: 0 12px;
+    font: inherit;
+    outline: none;
+  }
+
+  .search-input:focus {
+    border-color: var(--border-hover);
+  }
+
+  .search-hint,
+  .search-empty {
+    margin: 8px 0 0;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+  }
+
+  .search-results {
+    list-style: none;
+    margin: 12px 0 0;
+    padding: 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .search-results li a {
+    display: block;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-secondary);
+    text-decoration: none;
+  }
+
+  .search-results li a:hover {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+    text-decoration: none;
+  }
+
+  .search-results li a strong {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+  }
+
+  .search-results li a span {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+  }
+</style>

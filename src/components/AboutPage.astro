@@ -1,0 +1,78 @@
+---
+import type { Locale } from "../i18n";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const copy = locale === "zh"
+  ? {
+      title: "一个偏长期主义，也偏阅读体验的个人博客。",
+      intro: "这里主要写编程实践、工具判断，以及不适合发在碎片化平台的完整想法。",
+      summary: "我希望它像一本持续增补的工作笔记: 信息清晰、语气克制、阅读优先。",
+      sections: [
+        { title: "写作偏好", description: "重视结构、语气和可读性，尽量把经验写成可复用判断。" },
+        { title: "技术栈", description: "以 Astro、TypeScript、前端工程化和静态内容系统为主。" },
+        { title: "更新方式", description: "没有固定频率，采用慢更新策略，优先完成度。" },
+        { title: "联系方式", description: "后续可补充 GitHub、邮箱或社交链接。" },
+      ],
+    }
+  : {
+      title: "A personal blog shaped by long-term thinking and reading comfort.",
+      intro: "This space is for programming practice, tool decisions, and complete ideas that do not fit social timelines.",
+      summary: "I want it to feel like a steadily growing notebook: clear, restrained, and reading-first.",
+      sections: [
+        { title: "Writing style", description: "I value structure, tone, and readability, and turn experience into reusable judgment." },
+        { title: "Stack", description: "Current focus: Astro, TypeScript, frontend tooling, and static content systems." },
+        { title: "Publishing pace", description: "No fixed schedule. Fewer posts, better completion." },
+        { title: "Contact", description: "GitHub, email, or other links can be added here later." },
+      ],
+    };
+---
+
+<section class="intro">
+  <p class="eyebrow">About</p>
+  <h1>{copy.title}</h1>
+  <p>{copy.intro}</p>
+  <p class="summary">{copy.summary}</p>
+</section>
+
+<section class="about-list">
+  {copy.sections.map((section) => (
+    <article>
+      <h2>{section.title}</h2>
+      <p>{section.description}</p>
+    </article>
+  ))}
+</section>
+
+<style>
+  .intro {
+    max-width: var(--container-read);
+  }
+
+  .summary {
+    margin-bottom: 0;
+  }
+
+  .about-list {
+    margin-top: 4rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .about-list article {
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .about-list h2 {
+    font-size: 1.15rem;
+    margin-bottom: 6px;
+  }
+
+  .about-list p {
+    margin-bottom: 0;
+    font-size: 0.94rem;
+  }
+</style>

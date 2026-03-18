@@ -1,0 +1,46 @@
+---
+import { sharedCopy, type Locale } from "../i18n";
+
+interface Props {
+  locale?: Locale;
+}
+
+const today = new Date();
+const { locale = "zh" } = Astro.props;
+const copy = sharedCopy[locale];
+---
+
+<footer>
+  <p>© {today.getFullYear()} Ink & Interval</p>
+  <p class="note">{copy.footerNote}</p>
+</footer>
+
+<style>
+  footer {
+    max-width: var(--container-home);
+    margin: 80px auto 0;
+    padding: 32px 24px;
+    border-top: 1px solid var(--border);
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.7rem 1rem;
+    flex-wrap: wrap;
+  }
+
+  footer p {
+    margin: 0;
+  }
+
+  .note {
+    text-align: right;
+  }
+
+  @media (max-width: 720px) {
+    .note {
+      text-align: left;
+    }
+  }
+</style>
