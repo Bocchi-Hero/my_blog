@@ -1,32 +1,44 @@
 ---
-import { getCollection, render } from "astro:content";
+import { render } from "astro:content";
 import BlogPost from "../../layouts/BlogPost.astro";
-import { getLocalizedPostDescription, getLocalizedPostTags, getLocalizedPostTitle } from "../../content-utils";
+import {
+  getAdjacentPosts,
+  getPostSlug,
+  getRelatedPosts,
+  getSortedPosts,
+  estimateReadingTime,
+} from "../../content-utils";
 
 export async function getStaticPaths() {
-  const posts = await getCollection("blog");
+  const posts = await getSortedPosts("zh");
   return posts.map((post) => ({
-    params: { slug: post.id },
+    params: { slug: getPostSlug(post) },
     props: post,
   }));
 }
 
 const post = Astro.props;
-const words = post.body.trim().split(/\s+/).length;
-const readingTime = Math.max(1, Math.ceil(words / 220));
+const posts = await getSortedPosts("zh");
+const slug = getPostSlug(post);
+const { previous, next } = getAdjacentPosts(posts, slug);
+const relatedPosts = getRelatedPosts(post, posts, "zh");
+const readingTime = estimateReadingTime(post.body, "zh");
 const { Content, headings } = await render(post);
 ---
 
 <BlogPost
-  title={getLocalizedPostTitle(post, "zh")}
-  description={getLocalizedPostDescription(post, "zh")}
+  title={post.data.title}
+  description={post.data.description}
   pubDate={post.data.pubDate}
   updatedDate={post.data.updatedDate}
   heroImage={post.data.heroImage}
-  tags={getLocalizedPostTags(post, "zh")}
+  tags={post.data.tags}
   readingTime={readingTime}
   locale="zh"
   headings={headings}
+  previousPost={previous}
+  nextPost={next}
+  relatedPosts={relatedPosts}
 >
   <Content />
 </BlogPost>

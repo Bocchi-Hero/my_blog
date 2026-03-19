@@ -1,0 +1,26 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ArchivePage from "../../components/ArchivePage.astro";
+import { findTagBySlug, getSortedPosts, slugifyTag } from "../../content-utils";
+import { SITE_TITLE } from "../../consts";
+
+export async function getStaticPaths() {
+  const posts = await getSortedPosts("zh");
+  const tags = [...new Set(posts.flatMap((post) => post.data.tags.map((tag) => tag.trim()).filter(Boolean)))];
+
+  return tags.map((tag) => ({
+    params: { tag: slugifyTag(tag) },
+  }));
+}
+
+const posts = await getSortedPosts("zh");
+const activeTag = findTagBySlug(posts, "zh", Astro.params.tag ?? "");
+
+if (!activeTag) {
+  return Astro.redirect("/404/");
+}
+---
+
+<BaseLayout title={`${activeTag.name} · 标签 · ${SITE_TITLE}`} description={`浏览 ${activeTag.name} 相关文章`} locale="zh">
+  <ArchivePage locale="zh" posts={posts} activeTagSlug={activeTag.slug} />
+</BaseLayout>

@@ -1,0 +1,26 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import ArchivePage from "../../../components/ArchivePage.astro";
+import { findTagBySlug, getSortedPosts, slugifyTag } from "../../../content-utils";
+import { SITE_TITLE } from "../../../consts";
+
+export async function getStaticPaths() {
+  const posts = await getSortedPosts("en");
+  const tags = [...new Set(posts.flatMap((post) => post.data.tags.map((tag) => tag.trim()).filter(Boolean)))];
+
+  return tags.map((tag) => ({
+    params: { tag: slugifyTag(tag) },
+  }));
+}
+
+const posts = await getSortedPosts("en");
+const activeTag = findTagBySlug(posts, "en", Astro.params.tag ?? "");
+
+if (!activeTag) {
+  return Astro.redirect("/en/404/");
+}
+---
+
+<BaseLayout title={`${activeTag.name} · Tag · ${SITE_TITLE}`} description={`Browse posts tagged ${activeTag.name}`} locale="en">
+  <ArchivePage locale="en" posts={posts} activeTagSlug={activeTag.slug} />
+</BaseLayout>

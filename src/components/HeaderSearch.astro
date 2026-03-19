@@ -1,43 +1,37 @@
 ---
-import { getCollection } from "astro:content";
-import { getLocalizedPostDescription, getLocalizedPostTags, getLocalizedPostTitle } from "../content-utils";
-import { localePath, type Locale } from "../i18n";
+import { withBase } from "../consts";
+import { type Locale } from "../i18n";
 
 interface Props {
   locale: Locale;
 }
 
 const { locale } = Astro.props;
-const posts = (await getCollection("blog")).sort(
-  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
-);
+const searchSource = withBase(locale === "en" ? "/en/search-index.json" : "/search-index.json");
 
 const copy = locale === "zh"
   ? {
       label: "搜索文章",
-      placeholder: "搜索文章",
+      placeholder: "搜索标题、摘要或标签",
       empty: "没有匹配结果",
     }
   : {
       label: "Search posts",
-      placeholder: "Search posts",
+      placeholder: "Search titles, summaries, or tags",
       empty: "No results",
     };
 
-const searchItems = posts.map((post) => {
-  const title = getLocalizedPostTitle(post, locale);
-  const description = getLocalizedPostDescription(post, locale);
-  const tags = getLocalizedPostTags(post, locale);
-  return {
-    title,
-    description,
-    url: localePath(locale, `/blog/${post.id}/`),
-    keywords: `${title} ${description} ${tags.join(" ")}`.toLowerCase(),
-  };
-});
 ---
 
-<div class="header-search" data-header-search>
+<div
+  class="header-search"
+  data-search-widget
+  data-search-max="6"
+  data-search-focus="true"
+  data-search-outside-close="true"
+  data-search-escape-close="true"
+  data-search-source={searchSource}
+>
   <label class="sr-only" for={`header-search-${locale}`}>{copy.label}</label>
   <input
     id={`header-search-${locale}`}
@@ -47,57 +41,14 @@ const searchItems = posts.map((post) => {
     autocomplete="off"
     data-search-input
   />
-  <ul class="header-search-results" data-search-results hidden>
-    {searchItems.map((item) => (
-      <li data-search-item data-keywords={item.keywords} hidden>
-        <a href={item.url}>
-          <strong>{item.title}</strong>
-          <span>{item.description}</span>
-        </a>
-      </li>
-    ))}
-    <li class="header-search-empty" data-search-empty hidden>{copy.empty}</li>
-  </ul>
+  <ul class="header-search-results" data-search-results hidden></ul>
+  <p class="header-search-empty" data-search-empty hidden>{copy.empty}</p>
 </div>
 
-<script is:inline>
-  const searchRoots = document.querySelectorAll("[data-header-search]");
-  searchRoots.forEach((root) => {
-    const input = root.querySelector("[data-search-input]");
-    const results = root.querySelector("[data-search-results]");
-    const items = Array.from(root.querySelectorAll("[data-search-item]"));
-    const empty = root.querySelector("[data-search-empty]");
-    if (!input || !results || !items.length || !empty) return;
+<script>
+  import { initSearchWidgets } from "../scripts/search-widgets";
 
-    const update = () => {
-      const query = input.value.trim().toLowerCase();
-      const hasQuery = query.length > 0;
-      let shown = 0;
-      items.forEach((item) => {
-        const text = item.dataset.keywords || "";
-        const matched = hasQuery && text.includes(query);
-        const visible = matched && shown < 6;
-        item.hidden = !visible;
-        if (visible) shown += 1;
-      });
-      empty.hidden = !hasQuery || shown > 0;
-      results.hidden = !hasQuery;
-    };
-
-    input.addEventListener("input", update);
-    input.addEventListener("focus", update);
-    document.addEventListener("click", (event) => {
-      if (!root.contains(event.target)) {
-        results.hidden = true;
-      }
-    });
-    input.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") {
-        results.hidden = true;
-        input.blur();
-      }
-    });
-  });
+  initSearchWidgets();
 </script>
 
 <style>
@@ -152,18 +103,23 @@ const searchItems = posts.map((post) => {
     overflow-y: auto;
   }
 
-  .header-search-results li a {
+  .header-search-results :global(li) {
+    list-style: none;
+  }
+
+  .header-search-results :global(li a) {
     display: block;
     padding: 8px 10px;
     text-decoration: none;
   }
 
-  .header-search-results li a:hover {
+  .header-search-results :global(li a:hover),
+  .header-search-results :global(li.active a) {
     background: var(--bg-hover);
     text-decoration: none;
   }
 
-  .header-search-results li strong {
+  .header-search-results :global(li strong) {
     display: block;
     font-family: var(--font-display);
     font-size: 0.86rem;
@@ -173,7 +129,7 @@ const searchItems = posts.map((post) => {
     line-height: 1.35;
   }
 
-  .header-search-results li span {
+  .header-search-results :global(li span) {
     display: block;
     margin-top: 1px;
     font-size: 0.76rem;
@@ -181,10 +137,24 @@ const searchItems = posts.map((post) => {
     line-height: 1.45;
   }
 
+  .header-search-results :global(mark) {
+    background: var(--accent-light);
+    color: var(--text-primary);
+  }
+
   .header-search-empty {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    width: 100%;
+    margin: 0;
     padding: 8px 10px;
     font-size: 0.78rem;
     color: var(--text-muted);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--bg-surface);
+    z-index: 20;
   }
 
   @media (max-width: 720px) {

@@ -1,49 +1,125 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import BlogCard from "./BlogCard.astro";
-import { getLocalizedPostDescription, getLocalizedPostTags, getLocalizedPostTitle } from "../content-utils";
+import PostSearch from "./PostSearch.astro";
+import {
+  findTagBySlug,
+  getLocalizedPostDescription,
+  getLocalizedPostTags,
+  getLocalizedPostTitle,
+  getPostSlug,
+  getTagSummaries,
+  groupPostsByYear,
+} from "../content-utils";
 import { localePath, type Locale } from "../i18n";
 
 interface Props {
   locale: Locale;
   posts: CollectionEntry<"blog">[];
+  activeTagSlug?: string;
 }
 
-const { locale, posts } = Astro.props;
+const { locale, posts, activeTagSlug } = Astro.props;
+const tagSummaries = getTagSummaries(posts, locale);
+const activeTag = activeTagSlug ? findTagBySlug(posts, locale, activeTagSlug) : undefined;
+const filteredPosts = activeTag
+  ? posts.filter((post) => getLocalizedPostTags(post, locale).includes(activeTag.name))
+  : posts;
+const groupedPosts = groupPostsByYear(filteredPosts);
 const copy = locale === "zh"
   ? {
-      title: "全部文章",
-      count: `目前共 ${posts.length} 篇，按时间倒序。`,
-      note: "像索引页一样浏览标题与摘要，快速找到你想读的内容。",
+      title: activeTag ? `标签：${activeTag.name}` : "全部文章",
+      count: activeTag
+        ? `当前标签下共 ${filteredPosts.length} 篇文章。`
+        : `目前共 ${posts.length} 篇，按时间倒序。`,
+      note: activeTag
+        ? "可以继续按年份浏览，或切换到其他标签。"
+        : "可以按年份浏览，也可以先用标签和搜索快速缩小范围。",
+      yearLabel: "按年份筛选",
+      allYears: "全部年份",
+      tagsTitle: "标签",
+      archiveLink: "返回全部文章",
     }
   : {
-      title: "All posts",
-      count: `${posts.length} posts in reverse chronological order.`,
-      note: "Scan this index quickly by title and summary.",
+      title: activeTag ? `Tag: ${activeTag.name}` : "All posts",
+      count: activeTag
+        ? `${filteredPosts.length} posts under this tag.`
+        : `${posts.length} posts in reverse chronological order.`,
+      note: activeTag
+        ? "Browse by year or switch to another tag."
+        : "Browse by year, or narrow things down with tags and search.",
+      yearLabel: "Filter by year",
+      allYears: "All years",
+      tagsTitle: "Tags",
+      archiveLink: "Back to all posts",
     };
 ---
 
-<section class="archive-head">
+<section class="archive-head" data-archive-page>
   <p class="eyebrow">Archive</p>
   <h1>{copy.title}</h1>
   <p class="count">{copy.count}</p>
   <p class="note">{copy.note}</p>
+
+  <div class="archive-search">
+    <PostSearch locale={locale} posts={posts} />
+  </div>
+
+  <div class="archive-tags">
+    <p class="filter-label">{copy.tagsTitle}</p>
+    <div class="tag-list">
+      {activeTag && <a href={localePath(locale, "/blog/")} class="tag reset-tag">{copy.archiveLink}</a>}
+      {tagSummaries.map((tag) => (
+        <a
+          href={tag.url}
+          class:list={["tag", "tag-link", { active: activeTag?.slug === tag.slug }]}
+        >
+          {tag.name} <span>{tag.count}</span>
+        </a>
+      ))}
+    </div>
+  </div>
+
+  <div class="archive-years">
+    <p class="filter-label">{copy.yearLabel}</p>
+    <div class="year-list" data-year-filters>
+      <button type="button" class="year-chip active" data-year-filter="all">{copy.allYears}</button>
+      {groupedPosts.map((group) => (
+        <button type="button" class="year-chip" data-year-filter={String(group.year)}>{group.year}</button>
+      ))}
+    </div>
+  </div>
 </section>
 
 <section class="archive-list">
-  <div class="post-list">
-    {posts.map((post) => (
-      <BlogCard
-        locale={locale}
-        title={getLocalizedPostTitle(post, locale)}
-        description={getLocalizedPostDescription(post, locale)}
-        pubDate={post.data.pubDate}
-        tags={getLocalizedPostTags(post, locale)}
-        url={localePath(locale, `/blog/${post.id}/`)}
-      />
-    ))}
-  </div>
+  {groupedPosts.map((group) => (
+    <section class="year-group" data-year-group={String(group.year)}>
+      <div class="year-head">
+        <h2>{group.year}</h2>
+        <span>{group.posts.length}</span>
+      </div>
+
+      <div class="post-list">
+        {group.posts.map((post) => (
+          <BlogCard
+            locale={locale}
+            title={getLocalizedPostTitle(post, locale)}
+            description={getLocalizedPostDescription(post, locale)}
+            pubDate={post.data.pubDate}
+            tags={getLocalizedPostTags(post, locale)}
+            url={localePath(locale, `/blog/${getPostSlug(post)}/`)}
+          />
+        ))}
+      </div>
+    </section>
+  ))}
 </section>
+
+<script>
+  import { initArchiveFilters } from "../scripts/archive-filters";
+
+  initArchiveFilters();
+</script>
 
 <style>
   .archive-head {
@@ -56,8 +132,79 @@ const copy = locale === "zh"
     margin-bottom: 0.75rem;
   }
 
+  .archive-search {
+    margin-top: 1.5rem;
+  }
+
+  .archive-tags,
+  .archive-years {
+    margin-top: 1.25rem;
+  }
+
+  .filter-label {
+    margin-bottom: 0.45rem;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+
+  .tag-list,
+  .year-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .tag-link span {
+    color: var(--text-muted);
+    margin-left: 4px;
+  }
+
+  .tag-link.active,
+  .reset-tag {
+    background: var(--tag-hover);
+  }
+
+  .year-chip {
+    border: 1px solid var(--border);
+    background: var(--bg-surface);
+    color: var(--text-secondary);
+    padding: 6px 12px;
+    border-radius: 999px;
+    font: inherit;
+    cursor: pointer;
+  }
+
+  .year-chip.active,
+  .year-chip:hover {
+    color: var(--text-primary);
+    border-color: var(--border-hover);
+    background: var(--bg-hover);
+  }
+
   .archive-list {
     margin-top: 4rem;
+  }
+
+  .year-group + .year-group {
+    margin-top: 2.5rem;
+  }
+
+  .year-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .year-head h2,
+  .year-head span {
+    margin: 0;
+  }
+
+  .year-head span {
+    color: var(--text-muted);
+    font-size: 0.82rem;
   }
 
   .post-list {

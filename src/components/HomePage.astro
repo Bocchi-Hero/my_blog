@@ -1,7 +1,8 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import BlogCard from "./BlogCard.astro";
-import { getLocalizedPostDescription, getLocalizedPostTags, getLocalizedPostTitle } from "../content-utils";
+import HomeStatsPanel from "./HomeStatsPanel.astro";
+import { getLocalizedPostDescription, getLocalizedPostTags, getLocalizedPostTitle, getPostSlug } from "../content-utils";
 import { localePath, type Locale } from "../i18n";
 
 interface Props {
@@ -33,6 +34,8 @@ const copy = locale === "zh"
     };
 ---
 
+<HomeStatsPanel locale={locale} posts={posts} />
+
 <section class="home-hero">
   <p class="eyebrow">{copy.eyebrow}</p>
   <h1>{copy.title}</h1>
@@ -58,7 +61,7 @@ const copy = locale === "zh"
         description={getLocalizedPostDescription(post, locale)}
         pubDate={post.data.pubDate}
         tags={getLocalizedPostTags(post, locale)}
-        url={localePath(locale, `/blog/${post.id}/`)}
+        url={localePath(locale, `/blog/${getPostSlug(post)}/`)}
       />
     ))}
   </div>
@@ -67,7 +70,7 @@ const copy = locale === "zh"
 <style>
   .home-hero {
     max-width: var(--container-read);
-    padding-top: 12px;
+    padding-top: 6px;
   }
 
   .home-hero h1 {

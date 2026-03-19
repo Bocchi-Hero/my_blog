@@ -1,14 +1,14 @@
 ---
-import type { CollectionEntry } from "astro:content";
-import { getLocalizedPostDescription, getLocalizedPostTags, getLocalizedPostTitle } from "../content-utils";
-import { localePath, type Locale } from "../i18n";
+import { withBase } from "../consts";
+import { type Locale } from "../i18n";
 
 interface Props {
   locale: Locale;
-  posts: CollectionEntry<"blog">[];
+  posts: unknown[];
 }
 
-const { locale, posts } = Astro.props;
+const { locale } = Astro.props;
+const searchSource = withBase(locale === "en" ? "/en/search-index.json" : "/search-index.json");
 const copy = locale === "zh"
   ? {
       label: "搜索文章",
@@ -23,21 +23,9 @@ const copy = locale === "zh"
       empty: "No matching posts",
     };
 
-const searchItems = posts.map((post) => {
-  const title = getLocalizedPostTitle(post, locale);
-  const description = getLocalizedPostDescription(post, locale);
-  const tags = getLocalizedPostTags(post, locale);
-  return {
-    title,
-    description,
-    tags,
-    url: localePath(locale, `/blog/${post.id}/`),
-    keywords: `${title} ${description} ${tags.join(" ")}`.toLowerCase(),
-  };
-});
 ---
 
-<section class="search-panel" data-search-root>
+<section class="search-panel" data-search-widget data-search-max="8" data-search-source={searchSource}>
   <label class="search-label" for={`search-${locale}`}>{copy.label}</label>
   <input
     id={`search-${locale}`}
@@ -49,47 +37,13 @@ const searchItems = posts.map((post) => {
   />
   <p class="search-hint" data-search-hint>{copy.hint}</p>
   <p class="search-empty" data-search-empty hidden>{copy.empty}</p>
-  <ul class="search-results" data-search-results>
-    {searchItems.map((item) => (
-      <li data-search-item data-keywords={item.keywords} hidden>
-        <a href={item.url}>
-          <strong>{item.title}</strong>
-          <span>{item.description}</span>
-        </a>
-      </li>
-    ))}
-  </ul>
+  <ul class="search-results" data-search-results></ul>
 </section>
 
-<script is:inline>
-  const roots = document.querySelectorAll("[data-search-root]");
-  roots.forEach((root) => {
-    const input = root.querySelector("[data-search-input]");
-    const results = root.querySelector("[data-search-results]");
-    const items = Array.from(root.querySelectorAll("[data-search-item]"));
-    const hint = root.querySelector("[data-search-hint]");
-    const empty = root.querySelector("[data-search-empty]");
-    if (!input || !results || !items.length || !hint || !empty) return;
+<script>
+  import { initSearchWidgets } from "../scripts/search-widgets";
 
-    const update = () => {
-      const q = input.value.trim().toLowerCase();
-      const hasQuery = q.length > 0;
-      let shown = 0;
-      items.forEach((item) => {
-        const text = item.dataset.keywords || "";
-        const matched = hasQuery && text.includes(q);
-        const visible = matched && shown < 8;
-        item.hidden = !visible;
-        if (visible) shown += 1;
-      });
-      results.hidden = !hasQuery;
-      hint.hidden = hasQuery;
-      empty.hidden = !hasQuery || shown !== 0;
-    };
-
-    input.addEventListener("input", update);
-    update();
-  });
+  initSearchWidgets();
 </script>
 
 <style>
@@ -134,7 +88,11 @@ const searchItems = posts.map((post) => {
     border-top: 1px solid var(--border);
   }
 
-  .search-results li a {
+  .search-results :global(li) {
+    list-style: none;
+  }
+
+  .search-results :global(li a) {
     display: block;
     padding: 10px 0;
     border-bottom: 1px solid var(--border);
@@ -142,13 +100,14 @@ const searchItems = posts.map((post) => {
     text-decoration: none;
   }
 
-  .search-results li a:hover {
+  .search-results :global(li a:hover),
+  .search-results :global(li.active a) {
     background: var(--bg-hover);
     color: var(--text-primary);
     text-decoration: none;
   }
 
-  .search-results li a strong {
+  .search-results :global(li a strong) {
     display: block;
     font-family: var(--font-display);
     font-size: 0.9rem;
@@ -158,8 +117,13 @@ const searchItems = posts.map((post) => {
     margin-bottom: 2px;
   }
 
-  .search-results li a span {
+  .search-results :global(li a span) {
     font-size: 0.82rem;
     color: var(--text-secondary);
+  }
+
+  .search-results :global(mark) {
+    background: var(--accent-light);
+    color: var(--text-primary);
   }
 </style>

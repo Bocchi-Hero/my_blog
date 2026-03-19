@@ -1,6 +1,7 @@
 ---
 import FormattedDate from "./FormattedDate.astro";
-import type { Locale } from "../i18n";
+import { slugifyTag } from "../content-utils";
+import { localePath, type Locale } from "../i18n";
 
 interface Props {
   title: string;
@@ -15,35 +16,44 @@ const { title, description, pubDate, tags = [], url, locale = "zh" } = Astro.pro
 ---
 
 <article class="post-item">
-  <a href={url}>
+  <a href={url} class="post-link">
     <h3 class="post-title">{title}</h3>
     <p class="post-date"><FormattedDate date={pubDate} locale={locale} /></p>
     <p class="post-desc">{description}</p>
-    {tags.length > 0 && (
-      <div class="post-tags">
-        {tags.map((tag) => (
-          <span class="tag">{tag}</span>
-        ))}
-      </div>
-    )}
   </a>
+  {tags.length > 0 && (
+    <div class="post-tags" aria-label={locale === "zh" ? "文章标签" : "Post tags"}>
+      {tags.map((tag) => (
+        <a href={localePath(locale, `/tags/${slugifyTag(tag)}/`)} class="tag">{tag}</a>
+      ))}
+    </div>
+  )}
 </article>
 
 <style>
-  .post-item a {
+  .post-item {
+    padding: 18px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .post-link {
     display: grid;
     grid-template-columns: 1fr auto;
     align-items: baseline;
-    padding: 18px 0;
-    border-bottom: 1px solid var(--border);
     text-decoration: none;
   }
 
-  .post-item a:hover {
+  .post-item:hover {
     background: var(--bg-hover);
     margin: 0 -12px;
+  }
+
+  .post-item:hover {
     padding-left: 12px;
     padding-right: 12px;
+  }
+
+  .post-link:hover {
     text-decoration: none;
   }
 
@@ -73,15 +83,18 @@ const { title, description, pubDate, tags = [], url, locale = "zh" } = Astro.pro
   }
 
   .post-tags {
-    grid-column: 1;
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
     margin-top: 12px;
   }
 
+  .post-tags a {
+    text-decoration: none;
+  }
+
   @media (max-width: 720px) {
-    .post-item a {
+    .post-link {
       grid-template-columns: 1fr;
       gap: 4px;
     }

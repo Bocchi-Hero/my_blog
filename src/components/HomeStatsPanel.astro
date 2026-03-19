@@ -1,0 +1,220 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { SITE_TITLE } from "../consts";
+import { getLocalizedPostTags, getLocalizedPostTitle, getPostSlug, getTagSummaries } from "../content-utils";
+import { localePath, type Locale } from "../i18n";
+import PostSearch from "./PostSearch.astro";
+
+interface Props {
+  locale: Locale;
+  posts: CollectionEntry<"blog">[];
+}
+
+const { locale, posts } = Astro.props;
+
+const tags = new Set<string>();
+const years = new Set<number>();
+
+posts.forEach((post) => {
+  years.add(post.data.pubDate.getFullYear());
+  getLocalizedPostTags(post, locale).forEach((tag) => {
+    const normalized = tag.trim();
+    if (normalized) tags.add(normalized);
+  });
+});
+
+const latestPost = posts[0];
+const topTags = getTagSummaries(posts, locale).slice(0, 5);
+
+const copy = locale === "zh"
+  ? {
+      eyebrow: "Site overview",
+      title: "博客网站数据统计",
+      lead: "先看站点信息，再开始浏览文章。",
+      stats: {
+        posts: "文章总数",
+        tags: "标签数量",
+        years: "写作年份",
+      },
+      latest: "最近更新",
+      tagsTitle: "常用标签",
+      empty: "还没有文章，先写第一篇吧。",
+    }
+  : {
+      eyebrow: "Site overview",
+      title: "Blog statistics",
+      lead: "A quick snapshot before you start reading.",
+      stats: {
+        posts: "Posts",
+        tags: "Tags",
+        years: "Active years",
+      },
+      latest: "Latest update",
+      tagsTitle: "Popular tags",
+      empty: "No posts yet. Time to publish your first one.",
+    };
+
+const statItems = [
+  { label: copy.stats.posts, value: String(posts.length) },
+  { label: copy.stats.tags, value: String(tags.size) },
+  { label: copy.stats.years, value: String(years.size) },
+];
+---
+
+<section class="home-stats panel" aria-labelledby={`home-stats-${locale}`}>
+  <p class="eyebrow">{copy.eyebrow}</p>
+  <h2 id={`home-stats-${locale}`} class="site-name">{SITE_TITLE}</h2>
+  <p class="stats-title">{copy.title}</p>
+  <p class="stats-lead">{copy.lead}</p>
+
+  <div class="stats-grid">
+    {statItems.map((item) => (
+      <article class="stat-item">
+        <span>{item.label}</span>
+        <strong>{item.value}</strong>
+      </article>
+    ))}
+  </div>
+
+  {
+    latestPost ? (
+      <p class="latest-post">
+        <span>{copy.latest}</span>
+        <a href={localePath(locale, `/blog/${getPostSlug(latestPost)}/`)}>{getLocalizedPostTitle(latestPost, locale)}</a>
+      </p>
+    ) : (
+      <p class="latest-post">{copy.empty}</p>
+    )
+  }
+
+  {topTags.length > 0 && (
+    <div class="top-tags">
+      <span>{copy.tagsTitle}</span>
+      <div>
+        {topTags.map((tag) => (
+          <a href={tag.url} class="tag">{tag.name}</a>
+        ))}
+      </div>
+    </div>
+  )}
+
+  <div class="stats-search">
+    <PostSearch locale={locale} posts={posts} />
+  </div>
+</section>
+
+<style>
+  .home-stats {
+    padding: 24px;
+    margin-bottom: 2.5rem;
+  }
+
+  .site-name {
+    margin: 0;
+    font-size: clamp(1.5rem, 2.8vw, 2rem);
+  }
+
+  .stats-title {
+    margin: 0.35rem 0 0.4rem;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+  }
+
+  .stats-lead {
+    margin-bottom: 1rem;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 1rem;
+  }
+
+  .stat-item {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--bg-page);
+    padding: 12px 14px;
+    min-height: 88px;
+    display: grid;
+    align-content: center;
+    gap: 2px;
+  }
+
+  .stat-item span {
+    color: var(--text-muted);
+    font-size: 0.76rem;
+    line-height: 1.3;
+  }
+
+  .stat-item strong {
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 2.2vw, 1.6rem);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+
+  .latest-post {
+    margin-bottom: 1.2rem;
+    font-size: 0.86rem;
+  }
+
+  .latest-post span {
+    color: var(--text-muted);
+    margin-right: 10px;
+  }
+
+  .latest-post a {
+    color: var(--text-secondary);
+    text-decoration: none;
+  }
+
+  .latest-post a:hover {
+    color: var(--text-primary);
+    text-decoration: underline;
+  }
+
+  .stats-search {
+    border-top: 1px solid var(--border);
+    padding-top: 1rem;
+  }
+
+  .top-tags {
+    display: grid;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .top-tags > span {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  .top-tags > div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .stats-search :global(.search-panel) {
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 840px) {
+    .stats-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 560px) {
+    .home-stats {
+      padding: 18px;
+    }
+
+    .stats-grid {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+  }
+</style>
