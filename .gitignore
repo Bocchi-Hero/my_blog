@@ -33,3 +33,6 @@ dev*.err
 # local assistant notes
 AGENTS.md
 CLAUDE.md
+
+# local content workspace
+src/content/blog/.obsidian/
