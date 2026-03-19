@@ -4,3 +4,6 @@
 [ 1860289ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_TIMED_OUT @ https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css:0
 [ 1882336ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_TIMED_OUT @ https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css:0
 [ 1955047ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_TIMED_OUT @ https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css:0
+[ 4350862ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_TIMED_OUT @ https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css:0
+[ 5411264ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://127.0.0.1:4321/src/layouts/BaseLayout.astro?astro&type=script&index=0&lang.ts:0
+[ 5462891ms] The requested module '/src/scripts/title-typewriter.ts' does not provide an export named 'initTitleTypewriter'

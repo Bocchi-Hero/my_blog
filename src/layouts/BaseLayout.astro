@@ -76,6 +76,14 @@ const ogImageUrl = new URL(ogImageHref, Astro.site).toString();
   </body>
 </html>
 
+<script>
+  import { initTitleTypewriter } from "../scripts/title-typewriter";
+
+  document.addEventListener("astro:page-load", () => {
+    initTitleTypewriter();
+  });
+</script>
+
 <style>
   .page-shell {
     min-height: 100vh;
