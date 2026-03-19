@@ -1,0 +1,6 @@
+[ 1086070ms] [ERROR] WebSocket connection to 'ws://127.0.0.1:4321/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:4321/@vite/client:1766
+[ 1793476ms] [ERROR] WebSocket connection to 'ws://127.0.0.1:4321/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:4321/@vite/client:1766
+[ 1827951ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_TIMED_OUT @ https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css:0
+[ 1860289ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_TIMED_OUT @ https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css:0
+[ 1882336ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_TIMED_OUT @ https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css:0
+[ 1955047ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_TIMED_OUT @ https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css:0

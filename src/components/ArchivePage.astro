@@ -118,7 +118,9 @@ const copy = locale === "zh"
 <script>
   import { initArchiveFilters } from "../scripts/archive-filters";
 
-  initArchiveFilters();
+  document.addEventListener("astro:page-load", () => {
+    initArchiveFilters();
+  });
 </script>
 
 <style>

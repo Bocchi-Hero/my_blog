@@ -1,0 +1,487 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - navigation [ref=e4]:
+        - link "Bocchi_Home" [ref=e5] [cursor=pointer]:
+          - /url: /en/
+        - generic [ref=e6]:
+          - generic [ref=e7]:
+            - link "Home" [ref=e8] [cursor=pointer]:
+              - /url: /en/
+            - link "Posts" [ref=e9] [cursor=pointer]:
+              - /url: /en/blog/
+            - link "About" [ref=e10] [cursor=pointer]:
+              - /url: /en/about/
+          - generic [ref=e11]:
+            - generic [ref=e12]: Search posts
+            - searchbox "Search posts" [ref=e13]
+          - generic "Language switch" [ref=e14]:
+            - link "中" [ref=e15] [cursor=pointer]:
+              - /url: /blog/git-guide-with-my-blog/
+            - generic [ref=e16]: /
+            - link "EN" [ref=e17] [cursor=pointer]:
+              - /url: /en/blog/git-guide-with-my-blog/
+    - main [ref=e18]:
+      - article [ref=e19]:
+        - generic [ref=e21]: 0%
+        - link "Back to archive" [ref=e22] [cursor=pointer]:
+          - /url: /en/blog/
+        - generic [ref=e23]:
+          - complementary [ref=e24]:
+            - navigation "Contents" [ref=e25]:
+              - heading "Contents" [level=2] [ref=e26]
+              - list [ref=e27]:
+                - listitem [ref=e28]:
+                  - link "Start with the commit history" [ref=e29] [cursor=pointer]:
+                    - /url: "#start-with-the-commit-history"
+                - listitem [ref=e30]:
+                  - link "Your first commit does not need to be perfect" [ref=e31] [cursor=pointer]:
+                    - /url: "#your-first-commit-does-not-need-to-be-perfect"
+                - listitem [ref=e32]:
+                  - link "git status is the habit worth building first" [ref=e33] [cursor=pointer]:
+                    - /url: "#git-status-is-the-habit-worth-building-first"
+                - listitem [ref=e34]:
+                  - link "Not every file belongs in the repository" [ref=e35] [cursor=pointer]:
+                    - /url: "#not-every-file-belongs-in-the-repository"
+                - listitem [ref=e36]:
+                  - link "Commit messages decide whether future-you can read the history" [ref=e37] [cursor=pointer]:
+                    - /url: "#commit-messages-decide-whether-future-you-can-read-the-history"
+                - listitem [ref=e38]:
+                  - link "A good commit should usually do one thing" [ref=e39] [cursor=pointer]:
+                    - /url: "#a-good-commit-should-usually-do-one-thing"
+                - listitem [ref=e40]:
+                  - link "Git also helps you understand how the project became what it is" [ref=e41] [cursor=pointer]:
+                    - /url: "#git-also-helps-you-understand-how-the-project-became-what-it-is"
+                - listitem [ref=e42]:
+                  - link "In this project, git push is almost the same as “ready to publish”" [ref=e43] [cursor=pointer]:
+                    - /url: "#in-this-project-git-push-is-almost-the-same-as-ready-to-publish"
+                - listitem [ref=e44]:
+                  - link "A simple Git routine for a personal blog" [ref=e45] [cursor=pointer]:
+                    - /url: "#a-simple-git-routine-for-a-personal-blog"
+                - listitem [ref=e46]:
+                  - link "When writing a new post" [ref=e47] [cursor=pointer]:
+                    - /url: "#when-writing-a-new-post"
+                - listitem [ref=e48]:
+                  - link "When fixing a layout problem" [ref=e49] [cursor=pointer]:
+                    - /url: "#when-fixing-a-layout-problem"
+                - listitem [ref=e50]:
+                  - link "When tuning styles" [ref=e51] [cursor=pointer]:
+                    - /url: "#when-tuning-styles"
+                - listitem [ref=e52]:
+                  - link "Closing thought" [ref=e53] [cursor=pointer]:
+                    - /url: "#closing-thought"
+          - generic [ref=e54]:
+            - generic [ref=e55]:
+              - paragraph [ref=e56]: Essay
+              - 'heading "Learn Git with my blog project: a practical beginner guide" [level=1] [ref=e57]'
+              - paragraph [ref=e58]: A practical Git guide based on the real commit history of this Astro blog project.
+              - generic [ref=e59]:
+                - time [ref=e60]: March 19, 2026
+                - generic [ref=e61]: · 9 min read
+              - generic [ref=e62]:
+                - link "Tutorial" [ref=e63] [cursor=pointer]:
+                  - /url: /en/tags/tutorial/
+                - link "Git" [ref=e64] [cursor=pointer]:
+                  - /url: /en/tags/git/
+                - link "Blog" [ref=e65] [cursor=pointer]:
+                  - /url: /en/tags/blog/
+            - generic [ref=e66]:
+              - paragraph [ref=e67]: When people learn Git for the first time, the hardest part usually is not the number of commands. It is the lack of context.
+              - paragraph [ref=e68]:
+                - text: You may already know that
+                - code [ref=e69]: git init
+                - text: creates a repository,
+                - code [ref=e70]: git add .
+                - text: stages files, and
+                - code [ref=e71]: git commit -m "..."
+                - text: "saves a snapshot. But once those commands enter a real project, a new set of questions appears immediately:"
+              - list [ref=e72]:
+                - listitem [ref=e73]: How complete should the first commit be?
+                - listitem [ref=e74]: Which files should go into the repository, and which ones should stay out?
+                - listitem [ref=e75]: How do you write commit messages that still make sense later?
+                - listitem [ref=e76]: After writing a post or tweaking a layout, how should Git fit into the publishing workflow?
+              - paragraph [ref=e77]: Instead of using an empty demo folder, this article uses my actual blog repository as the example.
+              - paragraph [ref=e78]:
+                - text: It is a personal blog built with
+                - strong [ref=e79]: Astro
+                - text: and deployed to
+                - strong [ref=e80]: GitHub Pages
+                - text: . That makes it a better teaching case than a fake toy project, because you can see not just what Git can do, but how Git is actually used inside a growing project.
+              - paragraph [ref=e81]:
+                - text: "If you want the site-building side first, read:"
+                - link "Build an Astro blog from scratch and deploy it to GitHub Pages" [ref=e82] [cursor=pointer]:
+                  - /url: ../build-astro-blog/
+                - text: .
+              - heading "Start with the commit history" [level=2] [ref=e83]
+              - paragraph [ref=e84]: "Here are a few representative commits from the repository:"
+              - generic [ref=e85]:
+                - code [ref=e86]:
+                  - generic [ref=e87]: 01237d2 first commit
+                  - generic [ref=e88]: 9229bac readme
+                  - generic [ref=e89]: "8a50a72 chore: keep repo clean and enforce PR workflow"
+                  - generic [ref=e90]: "3e61e81 feat: rebrand site and add author profile links"
+                  - generic [ref=e91]: "85684eb fix: correct post link and widen article layout on pages"
+                  - generic [ref=e92]: "467248e style: keep centered layout and shift toc left only"
+                  - generic [ref=e93]: "12bad23 feat: use provided avatar image"
+                - button "Copy code" [ref=e94] [cursor=pointer]:
+                  - img [ref=e95]
+              - paragraph [ref=e98]: "Even a short list like this already tells a story:"
+              - list [ref=e99]:
+                - listitem [ref=e100]:
+                  - code [ref=e101]: first commit
+                  - text: captures the starting point
+                - listitem [ref=e102]:
+                  - code [ref=e103]: readme
+                  - text: improves project documentation
+                - listitem [ref=e104]:
+                  - code [ref=e105]: chore
+                  - text: keeps the repository clean
+                - listitem [ref=e106]:
+                  - code [ref=e107]: feat
+                  - text: adds visible functionality
+                - listitem [ref=e108]:
+                  - code [ref=e109]: fix
+                  - text: corrects a problem
+                - listitem [ref=e110]:
+                  - code [ref=e111]: style
+                  - text: refines presentation without changing behavior
+              - paragraph [ref=e112]: That is where Git becomes valuable. It preserves the path a project took, not just the latest result.
+              - heading "Your first commit does not need to be perfect" [level=2] [ref=e113]
+              - paragraph [ref=e114]: "This blog also began as a freshly created Astro project. A typical starting flow looks like this:"
+              - generic [ref=e115]:
+                - code [ref=e116]:
+                  - generic [ref=e117]: npm create astro@latest my-blog -- --template blog
+                  - generic [ref=e118]: cd my-blog
+                  - generic [ref=e119]: git init
+                  - generic [ref=e120]: git status
+                  - generic [ref=e121]: git add .
+                  - generic [ref=e122]: git commit -m "first commit"
+                - button "Copy code" [ref=e123] [cursor=pointer]:
+                  - img [ref=e124]
+              - paragraph [ref=e127]: "Many beginners hesitate here: “The project still feels rough. Should I wait?”"
+              - paragraph [ref=e128]: My answer is no.
+              - paragraph [ref=e129]:
+                - text: The value of a first commit is not that it finishes the project. It captures
+                - strong [ref=e130]: the first working version
+                - text: . Later, if you break a layout, delete a component by mistake, or simply want to see where the project started, that snapshot becomes useful immediately.
+              - paragraph [ref=e131]: "In this repository, the first entry really was:"
+              - generic [ref=e132]:
+                - code [ref=e133]:
+                  - generic [ref=e134]: 01237d2 first commit
+                - button "Copy code" [ref=e135] [cursor=pointer]:
+                  - img [ref=e136]
+              - paragraph [ref=e139]: "It is plain, but it does the most important job: it preserves the starting point."
+              - heading "git status is the habit worth building first" [level=2] [ref=e140]:
+                - code [ref=e141]: git status
+                - text: is the habit worth building first
+              - paragraph [ref=e142]:
+                - text: If there is one Git command that deserves repetition, it is not
+                - code [ref=e143]: git commit
+                - text: ". It is:"
+              - generic [ref=e144]:
+                - code [ref=e145]:
+                  - generic [ref=e146]: git status
+                - button "Copy code" [ref=e147] [cursor=pointer]:
+                  - img [ref=e148]
+              - paragraph [ref=e151]: Many Git mistakes happen not because people cannot commit, but because they do not know what they are about to commit.
+              - paragraph [ref=e152]:
+                - code [ref=e153]: git status
+                - text: "works like a dashboard. It shows:"
+              - list [ref=e154]:
+                - listitem [ref=e155]: Which files changed
+                - listitem [ref=e156]: Which files are already staged
+                - listitem [ref=e157]: Which files are still untracked
+              - paragraph [ref=e158]: "In this blog project, I rely on it at three moments:"
+              - list [ref=e159]:
+                - listitem [ref=e160]: Before I start editing, to confirm the working tree is clean
+                - listitem [ref=e161]: Before I commit, to confirm I am not including unrelated files
+                - listitem [ref=e162]: Before I push, to make sure the change is actually ready to go out
+              - paragraph [ref=e163]: "That habit prevents very ordinary mistakes:"
+              - list [ref=e164]:
+                - listitem [ref=e165]: Accidentally committing a local test file
+                - listitem [ref=e166]: Forgetting that a config file changed
+                - listitem [ref=e167]: Intending to publish one post but also shipping unrelated experiments
+              - paragraph [ref=e168]:
+                - text: "If you are still building Git habits, start here: run"
+                - code [ref=e169]: git status
+                - text: before every commit.
+              - heading "Not every file belongs in the repository" [level=2] [ref=e170]
+              - paragraph [ref=e171]: This blog also went through a classic early-project mistake.
+              - paragraph [ref=e172]: "In the first phase, some local files generated by development tools ended up in the repository together with the source code. That included caches, logs, and tool state. Later I had to clean them up with a dedicated commit:"
+              - generic [ref=e173]:
+                - code [ref=e174]:
+                  - generic [ref=e175]: "8a50a72 chore: keep repo clean and enforce PR workflow"
+                - button "Copy code" [ref=e176] [cursor=pointer]:
+                  - img [ref=e177]
+              - paragraph [ref=e180]: That commit is useful because it is not about a shiny new feature. It is about making the repository healthier for long-term work.
+              - paragraph [ref=e181]:
+                - text: The current
+                - code [ref=e182]: .gitignore
+                - text: "excludes things like:"
+              - generic [ref=e183]:
+                - code [ref=e184]:
+                  - generic [ref=e185]: dist/
+                  - generic [ref=e186]: node_modules/
+                  - generic [ref=e187]: .astro/
+                  - generic [ref=e188]: .omc/
+                  - generic [ref=e189]: .vite-temp/
+                  - generic [ref=e190]: .vite-cache-*/
+                  - generic [ref=e191]: dev*.log
+                  - generic [ref=e192]: dev*.err
+                  - generic [ref=e193]: AGENTS.md
+                  - generic [ref=e194]: CLAUDE.md
+                - button "Copy code" [ref=e195] [cursor=pointer]:
+                  - img [ref=e196]
+              - paragraph [ref=e199]: You can think of the rule in two groups.
+              - paragraph [ref=e200]: "Files that usually belong in Git:"
+              - list [ref=e201]:
+                - listitem [ref=e202]: Source code
+                - listitem [ref=e203]: Content files
+                - listitem [ref=e204]: Configuration
+                - listitem [ref=e205]: Deployment workflows
+              - paragraph [ref=e206]: "Files that usually do not:"
+              - list [ref=e207]:
+                - listitem [ref=e208]: Dependency directories
+                - listitem [ref=e209]: Build output
+                - listitem [ref=e210]: Caches
+                - listitem [ref=e211]: Logs
+                - listitem [ref=e212]: Local tool state
+              - paragraph [ref=e213]: Good repository hygiene is not about committing everything. It is about committing the right things.
+              - heading "Commit messages decide whether future-you can read the history" [level=2] [ref=e214]
+              - paragraph [ref=e215]: One of the most underestimated parts of Git is the commit message.
+              - paragraph [ref=e216]: "Almost everyone starts with vague messages like these:"
+              - generic [ref=e217]:
+                - code [ref=e218]:
+                  - generic [ref=e219]: change
+                  - generic [ref=e220]: try again
+                  - generic [ref=e221]: fix
+                  - generic [ref=e222]: update
+                  - generic [ref=e223]: move toc
+                - button "Copy code" [ref=e224] [cursor=pointer]:
+                  - img [ref=e225]
+              - paragraph [ref=e228]: They work for a few minutes because you still remember what happened. A few weeks later they become almost useless.
+              - paragraph [ref=e229]: "Later commits in this repository became much clearer:"
+              - generic [ref=e230]:
+                - code [ref=e231]:
+                  - generic [ref=e232]: "feat: rebrand site and add author profile links"
+                  - generic [ref=e233]: "fix: correct post link and widen article layout on pages"
+                  - generic [ref=e234]: "style: keep centered layout and shift toc left only"
+                  - generic [ref=e235]: "chore: keep repo clean and enforce PR workflow"
+                - button "Copy code" [ref=e236] [cursor=pointer]:
+                  - img [ref=e237]
+              - paragraph [ref=e240]: "This style helps because each message answers two questions:"
+              - list [ref=e241]:
+                - listitem [ref=e242]: What kind of change is this?
+                - listitem [ref=e243]: What did the change roughly do?
+              - paragraph [ref=e244]: "For a personal project, a small set of prefixes is often enough:"
+              - table [ref=e245]:
+                - rowgroup [ref=e246]:
+                  - row "Prefix Use case" [ref=e247]:
+                    - columnheader "Prefix" [ref=e248]
+                    - columnheader "Use case" [ref=e249]
+                - rowgroup [ref=e250]:
+                  - row "feat New feature, page, or interaction" [ref=e251]:
+                    - cell "feat" [ref=e252]:
+                      - code [ref=e253]: feat
+                    - cell "New feature, page, or interaction" [ref=e254]
+                  - row "fix Bug fix or behavior correction" [ref=e255]:
+                    - cell "fix" [ref=e256]:
+                      - code [ref=e257]: fix
+                    - cell "Bug fix or behavior correction" [ref=e258]
+                  - row "style Visual or layout-only adjustment" [ref=e259]:
+                    - cell "style" [ref=e260]:
+                      - code [ref=e261]: style
+                    - cell "Visual or layout-only adjustment" [ref=e262]
+                  - row "docs Documentation or blog content update" [ref=e263]:
+                    - cell "docs" [ref=e264]:
+                      - code [ref=e265]: docs
+                    - cell "Documentation or blog content update" [ref=e266]
+                  - row "chore Maintenance, cleanup, or config work" [ref=e267]:
+                    - cell "chore" [ref=e268]:
+                      - code [ref=e269]: chore
+                    - cell "Maintenance, cleanup, or config work" [ref=e270]
+              - paragraph [ref=e271]: "For example, if you only publish a new article, this:"
+              - generic [ref=e272]:
+                - code [ref=e273]:
+                  - generic [ref=e274]: git commit -m "update"
+                - button "Copy code" [ref=e275] [cursor=pointer]:
+                  - img [ref=e276]
+              - paragraph [ref=e279]: "is much less helpful than this:"
+              - generic [ref=e280]:
+                - code [ref=e281]:
+                  - generic [ref=e282]: "git commit -m \"docs: publish git tutorial for my blog\""
+                - button "Copy code" [ref=e283] [cursor=pointer]:
+                  - img [ref=e284]
+              - paragraph [ref=e287]: The exact wording can vary. The important part is that the message stays understandable later.
+              - heading "A good commit should usually do one thing" [level=2] [ref=e288]
+              - paragraph [ref=e289]: "Another Git principle that matters more than people think is this: keep each commit focused."
+              - paragraph [ref=e290]: "Imagine you do three things in one session:"
+              - list [ref=e291]:
+                - listitem [ref=e292]: Write a new article
+                - listitem [ref=e293]: Adjust page spacing
+                - listitem [ref=e294]: Replace an avatar asset
+              - paragraph [ref=e295]: You can commit them all together, but that makes the history harder to read, and it makes future rollback harder too.
+              - paragraph [ref=e296]: "A cleaner flow is to split the work. For example:"
+              - generic [ref=e297]:
+                - code [ref=e298]:
+                  - generic [ref=e299]: git status
+                  - generic [ref=e300]: git diff
+                  - generic [ref=e301]: git add src/content/blog/git-guide-with-my-blog.md
+                  - generic [ref=e302]: git diff --staged
+                  - generic [ref=e303]: "git commit -m \"docs: publish git tutorial for my blog\""
+                - button "Copy code" [ref=e304] [cursor=pointer]:
+                  - img [ref=e305]
+              - paragraph [ref=e308]:
+                - text: The key idea is that
+                - code [ref=e309]: git add .
+                - text: is not always the best choice.
+              - paragraph [ref=e310]: It is convenient, but it can easily sweep unrelated changes into the same commit. If you already know the specific file, component, or style update you want to commit, stage that directly.
+              - paragraph [ref=e311]: Focused commits create clearer history and safer reversions.
+              - heading "Git also helps you understand how the project became what it is" [level=2] [ref=e312]
+              - paragraph [ref=e313]: One reason I like revisiting commit history is that it restores development context I have already forgotten.
+              - paragraph [ref=e314]: "Looking only at the history of this blog, you can already see a rough progression:"
+              - list [ref=e315]:
+                - listitem [ref=e316]:
+                  - text: Build the first working version with
+                  - code [ref=e317]: first commit
+                - listitem [ref=e318]:
+                  - text: Add a
+                  - code [ref=e319]: README
+                - listitem [ref=e320]: Notice that logs and caches leaked into the repo, then clean them up
+                - listitem [ref=e321]: Keep refining the article layout, table of contents, and typography
+                - listitem [ref=e322]: Rebrand the site more clearly around a personal identity
+                - listitem [ref=e323]: Replace placeholder visuals with the real avatar
+              - paragraph [ref=e324]: At that point Git stops being just a backup tool. It becomes the timeline of the project.
+              - paragraph [ref=e325]: "If you want a better view of that history, use:"
+              - generic [ref=e326]:
+                - code [ref=e327]:
+                  - generic [ref=e328]: git log --oneline --graph --decorate
+                - button "Copy code" [ref=e329] [cursor=pointer]:
+                  - img [ref=e330]
+              - paragraph [ref=e333]: "If you want to inspect a single commit in more detail:"
+              - generic [ref=e334]:
+                - code [ref=e335]:
+                  - generic [ref=e336]: git show 3e61e81 --stat
+                - button "Copy code" [ref=e337] [cursor=pointer]:
+                  - img [ref=e338]
+              - paragraph [ref=e341]: That is often much more reliable than trying to remember whether you changed a file last week or last month.
+              - heading "In this project, git push is almost the same as “ready to publish”" [level=2] [ref=e342]:
+                - text: In this project,
+                - code [ref=e343]: git push
+                - text: is almost the same as “ready to publish”
+              - paragraph [ref=e344]: This repository is useful for learning Git because Git is not only local version control here. It is also part of the publishing pipeline.
+              - paragraph [ref=e345]: "The site uses a GitHub Pages workflow:"
+              - generic [ref=e346]:
+                - code [ref=e347]:
+                  - generic [ref=e348]: .github/workflows/deploy.yml
+                - button "Copy code" [ref=e349] [cursor=pointer]:
+                  - img [ref=e350]
+              - paragraph [ref=e353]:
+                - text: Whenever the
+                - code [ref=e354]: main
+                - text: "branch receives a push, GitHub Actions builds and deploys the site. In practice, the workflow usually looks like this:"
+              - list [ref=e355]:
+                - listitem [ref=e356]: Change content or code
+                - listitem [ref=e357]:
+                  - text: Run
+                  - code [ref=e358]: git status
+                - listitem [ref=e359]: Stage the intended files
+                - listitem [ref=e360]: Commit the change
+                - listitem [ref=e361]:
+                  - text: Run
+                  - code [ref=e362]: npm run build
+                - listitem [ref=e363]:
+                  - text: Push with
+                  - code [ref=e364]: git push origin main
+                - listitem [ref=e365]: Wait for deployment to finish
+              - paragraph [ref=e366]: That is why Git now feels like part of the blog workflow instead of an extra task around it.
+              - heading "A simple Git routine for a personal blog" [level=2] [ref=e367]
+              - paragraph [ref=e368]: You do not need a complicated Git strategy for a personal blog. Simple, readable, and stable is enough.
+              - paragraph [ref=e369]: "Here is a workflow I would recommend:"
+              - heading "When writing a new post" [level=3] [ref=e370]
+              - generic [ref=e371]:
+                - code [ref=e372]:
+                  - generic [ref=e373]: git status
+                  - generic [ref=e374]: git add src/content/blog/new-post.md
+                  - generic [ref=e375]: "git commit -m \"docs: publish a new blog post\""
+                  - generic [ref=e376]: npm run build
+                  - generic [ref=e377]: git push origin main
+                - button "Copy code" [ref=e378] [cursor=pointer]:
+                  - img [ref=e379]
+              - heading "When fixing a layout problem" [level=3] [ref=e382]
+              - generic [ref=e383]:
+                - code [ref=e384]:
+                  - generic [ref=e385]: git status
+                  - generic [ref=e386]: git add src/components src/layouts src/styles
+                  - generic [ref=e387]: "git commit -m \"fix: improve post layout on small screens\""
+                  - generic [ref=e388]: npm run build
+                  - generic [ref=e389]: git push origin main
+                - button "Copy code" [ref=e390] [cursor=pointer]:
+                  - img [ref=e391]
+              - heading "When tuning styles" [level=3] [ref=e394]
+              - generic [ref=e395]:
+                - code [ref=e396]:
+                  - generic [ref=e397]: git status
+                  - generic [ref=e398]: git add src/styles/global.css src/layouts/BlogPost.astro
+                  - generic [ref=e399]: "git commit -m \"style: rebalance article width and toc spacing\""
+                  - generic [ref=e400]: npm run build
+                  - generic [ref=e401]: git push origin main
+                - button "Copy code" [ref=e402] [cursor=pointer]:
+                  - img [ref=e403]
+              - paragraph [ref=e406]: "These commands look similar on the surface, but two details make the difference:"
+              - list [ref=e407]:
+                - listitem [ref=e408]: The staged scope is explicit
+                - listitem [ref=e409]: The commit message stays readable
+              - paragraph [ref=e410]: If you keep those two habits, your Git history is usually in pretty good shape.
+              - heading "Closing thought" [level=2] [ref=e411]
+              - paragraph [ref=e412]: "Git can feel dry when it is taught only as a list of commands. But inside a real project, it does something much more concrete:"
+              - list [ref=e413]:
+                - listitem [ref=e414]: It preserves each stage of work
+                - listitem [ref=e415]: It explains why changes exist
+                - listitem [ref=e416]: It makes future edits safer
+              - paragraph [ref=e417]: That is why this blog repository is such a good example. The article you are reading now only exists because the project history stayed readable enough to revisit and turn into a tutorial.
+              - paragraph [ref=e418]: "If you are just starting with Git, you do not need every command at once. Start with the important habits:"
+              - list [ref=e419]:
+                - listitem [ref=e420]: Check status
+                - listitem [ref=e421]: Stage intentionally
+                - listitem [ref=e422]: Write understandable commit messages
+                - listitem [ref=e423]: Build before you push
+              - paragraph [ref=e424]: Use Git that way for a while, and it stops feeling like memorization. It starts feeling like part of how you work.
+            - navigation "Keep reading" [ref=e425]:
+              - link "Previous Build an Astro blog from scratch and deploy it to GitHub Pages" [ref=e426] [cursor=pointer]:
+                - /url: /en/blog/build-astro-blog/
+                - generic [ref=e427]: Previous
+                - strong [ref=e428]: Build an Astro blog from scratch and deploy it to GitHub Pages
+            - region "Keep reading" [ref=e429]:
+              - generic [ref=e430]:
+                - heading "Keep reading" [level=2] [ref=e431]
+                - link "Back to top" [ref=e432] [cursor=pointer]:
+                  - /url: "#top"
+              - link "Build an Astro blog from scratch and deploy it to GitHub Pages A step-by-step guide to building a personal Astro blog and deploying it to GitHub Pages for free." [ref=e434] [cursor=pointer]:
+                - /url: /en/blog/build-astro-blog/
+                - strong [ref=e435]: Build an Astro blog from scratch and deploy it to GitHub Pages
+                - generic [ref=e436]: A step-by-step guide to building a personal Astro blog and deploying it to GitHub Pages for free.
+    - contentinfo [ref=e437]:
+      - paragraph [ref=e438]: © 2026 Bocchi_Hero
+      - paragraph [ref=e439]:
+        - text: Code, writing, and life notes by Bocchi_Hero. ·
+        - link "GitHub" [ref=e440] [cursor=pointer]:
+          - /url: https://github.com/Bocchi-Hero
+        - text: ·
+        - link "Bilibili" [ref=e441] [cursor=pointer]:
+          - /url: https://space.bilibili.com/1658112139
+  - generic [ref=e444]:
+    - button "Menu" [ref=e445]:
+      - img [ref=e447]
+      - generic: Menu
+    - button "Inspect" [ref=e451]:
+      - img [ref=e453]
+      - generic: Inspect
+    - button "Audit" [ref=e455]:
+      - generic [ref=e456]:
+        - img [ref=e457]
+        - img [ref=e460]
+      - generic: Audit
+    - button "Settings" [ref=e463]:
+      - img [ref=e465]
+      - generic: Settings

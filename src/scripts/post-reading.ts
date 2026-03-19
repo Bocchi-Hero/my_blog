@@ -1,4 +1,30 @@
+function initMermaid() {
+  const mermaidBlocks = document.querySelectorAll<HTMLElement>("pre > code.language-mermaid");
+  if (mermaidBlocks.length === 0) {
+    return;
+  }
+
+  import("mermaid").then(({ default: mermaid }) => {
+    mermaid.initialize({ startOnLoad: false, theme: "neutral" });
+
+    mermaidBlocks.forEach(async (codeEl, index) => {
+      const pre = codeEl.parentElement;
+      if (!pre) {
+        return;
+      }
+      const source = codeEl.textContent ?? "";
+      const id = `mermaid-diagram-${index}`;
+      const { svg } = await mermaid.render(id, source);
+      const wrapper = document.createElement("div");
+      wrapper.className = "mermaid-diagram";
+      wrapper.innerHTML = svg;
+      pre.replaceWith(wrapper);
+    });
+  });
+}
+
 export function initPostReading() {
+  initMermaid();
   const roots = document.querySelectorAll<HTMLElement>("[data-post-page]");
 
   roots.forEach((root) => {

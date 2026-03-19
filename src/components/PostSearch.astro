@@ -43,7 +43,9 @@ const copy = locale === "zh"
 <script>
   import { initSearchWidgets } from "../scripts/search-widgets";
 
-  initSearchWidgets();
+  document.addEventListener("astro:page-load", () => {
+    initSearchWidgets();
+  });
 </script>
 
 <style>

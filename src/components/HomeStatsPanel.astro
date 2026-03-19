@@ -13,10 +13,8 @@ interface Props {
 const { locale, posts } = Astro.props;
 
 const tags = new Set<string>();
-const years = new Set<number>();
 
 posts.forEach((post) => {
-  years.add(post.data.pubDate.getFullYear());
   getLocalizedPostTags(post, locale).forEach((tag) => {
     const normalized = tag.trim();
     if (normalized) tags.add(normalized);
@@ -26,6 +24,16 @@ posts.forEach((post) => {
 const latestPost = posts[0];
 const topTags = getTagSummaries(posts, locale).slice(0, 5);
 
+const latestUpdateDate = posts.reduce((latest, post) => {
+  const date = post.data.updatedDate ?? post.data.pubDate;
+  return date > latest ? date : latest;
+}, posts[0]?.data.pubDate ?? new Date());
+const latestUpdateFormatted = latestUpdateDate.toLocaleDateString(locale === "zh" ? "zh-CN" : "en-US", {
+  year: "numeric",
+  month: "short",
+  day: "numeric",
+});
+
 const copy = locale === "zh"
   ? {
       eyebrow: "Site overview",
@@ -34,7 +42,7 @@ const copy = locale === "zh"
       stats: {
         posts: "文章总数",
         tags: "标签数量",
-        years: "写作年份",
+        lastUpdate: "最近更新",
       },
       latest: "最近更新",
       tagsTitle: "常用标签",
@@ -47,7 +55,7 @@ const copy = locale === "zh"
       stats: {
         posts: "Posts",
         tags: "Tags",
-        years: "Active years",
+        lastUpdate: "Last update",
       },
       latest: "Latest update",
       tagsTitle: "Popular tags",
@@ -57,7 +65,7 @@ const copy = locale === "zh"
 const statItems = [
   { label: copy.stats.posts, value: String(posts.length) },
   { label: copy.stats.tags, value: String(tags.size) },
-  { label: copy.stats.years, value: String(years.size) },
+  { label: copy.stats.lastUpdate, value: latestUpdateFormatted },
 ];
 ---
 
@@ -136,7 +144,7 @@ const statItems = [
     border-radius: 10px;
     background: var(--bg-page);
     padding: 12px 14px;
-    min-height: 88px;
+    min-height: 72px;
     display: grid;
     align-content: center;
     gap: 2px;

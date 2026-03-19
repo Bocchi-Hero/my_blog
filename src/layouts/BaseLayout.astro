@@ -3,6 +3,7 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import { SITE_TITLE, SITE_DESCRIPTION, withBase } from "../consts";
 import { switchLocalePath, type Locale } from "../i18n";
+import { ClientRouter } from "astro:transitions";
 import "../styles/global.css";
 
 interface Props {
@@ -60,6 +61,8 @@ const ogImageUrl = new URL(ogImageHref, Astro.site).toString();
     <link rel="alternate" hreflang="zh-CN" href={zhAlternate.toString()} />
     <link rel="alternate" hreflang="en" href={enAlternate.toString()} />
     <link rel="icon" type="image/svg+xml" href={faviconHref} />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css" />
+    <ClientRouter />
     <title>{title}</title>
   </head>
   <body>

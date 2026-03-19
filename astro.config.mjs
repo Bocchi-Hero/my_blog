@@ -1,5 +1,8 @@
 import { defineConfig } from "astro/config";
 import sitemap from "@astrojs/sitemap";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
+import remarkGfm from "remark-gfm";
 
 const [owner = "yourusername", repository = ""] = process.env.GITHUB_REPOSITORY?.split("/") ?? [];
 const isUserSite = repository.endsWith(".github.io");
@@ -11,6 +14,8 @@ export default defineConfig({
   base,
   integrations: [sitemap()],
   markdown: {
+    remarkPlugins: [remarkMath, remarkGfm],
+    rehypePlugins: [rehypeKatex],
     shikiConfig: {
       theme: "github-light",
     },

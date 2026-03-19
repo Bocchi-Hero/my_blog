@@ -174,7 +174,9 @@ const copy = locale === "zh"
 <script>
   import { initPostReading } from "../scripts/post-reading";
 
-  initPostReading();
+  document.addEventListener("astro:page-load", () => {
+    initPostReading();
+  });
 </script>
 
 <style>

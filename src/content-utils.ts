@@ -224,3 +224,19 @@ export function getLocalizedPostTags(post: BlogPostEntry, locale: Locale) {
   }
   return post.data.tags;
 }
+
+export function estimateTotalWordCount(posts: BlogPostEntry[], locale: Locale): string {
+  let total = 0;
+  for (const post of posts) {
+    const source = post.body ?? "";
+    const hanChars = source.match(CJK_CHAR_REGEX)?.length ?? 0;
+    const words = source.trim().split(/\s+/).filter(Boolean).length;
+    const isChinese = locale === "zh" || (hanChars > 0 && hanChars >= words);
+    total += isChinese ? (hanChars > 0 ? hanChars : source.replace(/\s+/g, "").length) : words;
+  }
+
+  if (locale === "zh") {
+    return total >= 10000 ? `${(total / 10000).toFixed(1)} 万` : String(total);
+  }
+  return total >= 1000 ? `${(total / 1000).toFixed(1)}k` : String(total);
+}
