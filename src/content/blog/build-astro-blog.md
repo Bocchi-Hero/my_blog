@@ -12,12 +12,12 @@ tagsEn: ["Tutorial", "Astro", "GitHub Pages"]
 
 ## 为什么选 Astro？
 
-| 特性 | 说明 |
-|------|------|
-| 极快 | 默认零 JS，页面加载飞快 |
-| Markdown | 原生支持 Markdown/MDX 写作 |
-| 灵活 | 可混用 React、Vue、Svelte 组件 |
-| 部署简单 | 静态输出，适配各种免费托管平台 |
+| 特性       | 说明                      |
+| -------- | ----------------------- |
+| 极快       | 默认零 JS，页面加载飞快           |
+| Markdown | 原生支持 Markdown/MDX 写作    |
+| 灵活       | 可混用 React、Vue、Svelte 组件 |
+| 部署简单     | 静态输出，适配各种免费托管平台         |
 
 ## 前置准备
 

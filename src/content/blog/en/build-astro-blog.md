@@ -1,11 +1,13 @@
 ---
-locale: "en"
-translationKey: "build-astro-blog"
-slug: "en-build-astro-blog"
-title: "Build an Astro blog from scratch and deploy it to GitHub Pages"
-description: "A step-by-step guide to building a personal Astro blog and deploying it to GitHub Pages for free."
+locale: en
+translationKey: build-astro-blog
+slug: en-build-astro-blog
+title: Build an Astro blog from scratch and deploy it to GitHub Pages
+description: A step-by-step guide to building a personal Astro blog and deploying it to GitHub Pages for free.
 pubDate: 2026-03-18
-tags: ["Tutorial", "Astro", "GitHub Pages"]
+tags:
+  - Tutorial
+  - Astro
 ---
 
 This post records the complete process I used to build this blog from scratch. The stack is simple: **Astro** for the static site, **GitHub Pages** for free hosting, and **GitHub Actions** for automatic deployment.
